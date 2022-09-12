@@ -1,1 +1,1 @@
-# Chat-App-MERN
+# Chat App
