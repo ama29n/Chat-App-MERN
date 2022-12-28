@@ -3,6 +3,8 @@ import { TextField, Box, IconButton, InputAdornment, Button } from "@mui/materia
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PrimaryButton from "../Common/PrimaryButton";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const [showVisibility, setShowVisibility] = useState(false);
@@ -16,6 +18,26 @@ function LoginForm() {
   };
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
+  };
+  const navigate = useNavigate();
+  const loginHandler = (e) => {
+    e.preventDefault();
+    axios.post("/user/login", {
+      email: email,
+      password: password
+    })
+    .then(res => {
+      console.log(res.data);
+      navigate("/chat");
+    })
+    .catch(error => {
+      alert(error.response.data)
+    });
+  };
+  const defualtUserCredentialsHandler = (e) => {
+    e.preventDefault();
+    setEmail("johndoe@johndoe.com");
+    setPassword("johndoe");
   };
   return (
     <Box sx={__LoginForm_box}>
@@ -42,8 +64,8 @@ function LoginForm() {
         }}
         {...{ type: showVisibility ? null : "password" }}
       />
-      <PrimaryButton buttonText="Login" />
-      <Button variant="outlined">Get User Credential</Button>
+      <PrimaryButton clickHandler={loginHandler} buttonText="Login" />
+      <Button variant="outlined" onClick={defualtUserCredentialsHandler}>Get User Credential</Button>
     </Box>
   );
 }

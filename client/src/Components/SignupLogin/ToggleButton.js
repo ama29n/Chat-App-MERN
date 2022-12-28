@@ -11,7 +11,7 @@ export default function ColorToggleButton({ action, changeAction }) {
       <ToggleButton value="login" color="primary">
         Login
       </ToggleButton>
-      <ToggleButton value="signup" color="secondary">
+      <ToggleButton value="signup" color="primary">
         Sign Up
       </ToggleButton>
     </ToggleButtonGroup>
