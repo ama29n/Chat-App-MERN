@@ -9,6 +9,7 @@ const accessChats = asyncHandler(async (req, res) => {
     if (!userId) {
       res.status(400).send("User ID not sent in the body");
     }
+    // If chat already exists between the 2 users
     let validChat = await Chat.find({
       isGroupChat: false,
       $and: [
@@ -25,6 +26,7 @@ const accessChats = asyncHandler(async (req, res) => {
     if (validChat.length > 0) {
       res.send(validChat[0]);
     }
+    // If chat doesn't exists between the 2 users
     let chatData = {
       isGroupChat: false,
       chatName: "sender",
