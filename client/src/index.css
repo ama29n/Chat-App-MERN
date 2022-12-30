@@ -18,4 +18,22 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+    backgroundColor: #031425;
+}
+
+/* Cursor  */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #03141F;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* background: rgb(189, 189, 189);  */
+  background-color: #374045;
 }
