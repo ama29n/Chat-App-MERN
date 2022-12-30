@@ -87,5 +87,5 @@ const __StartPage_heading_box = {
   fontSize: "3rem",
   color: "#3a86ff",
   fontWeight: "500",
-  fontFamily: "'Oleo Script Swash Caps', cursive"
+  
 };

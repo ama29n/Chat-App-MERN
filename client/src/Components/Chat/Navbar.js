@@ -10,10 +10,10 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
+import userImage from "../../Resources/ProfilePicture.jpg";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -23,10 +23,9 @@ const Search = styled('div')(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: "2rem",
     width: 'auto',
   },
 }));
@@ -50,7 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '30ch',
     },
   },
 }));
@@ -125,24 +124,26 @@ export default function Navbar() {
     >
       <MenuItem>
         <IconButton size="large" color="inherit"><Badge badgeContent={17} color="error"><NotificationsIcon /></Badge></IconButton>
-        <p>Notifications</p>
+        <p style={{ marginLeft: "1rem"}}>Notifications</p>
       </MenuItem>
 
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton size="large" color="inherit"><AccountCircle /></IconButton>
-        <p>Profile</p>
+      <IconButton size="large" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box></IconButton>
+        <p style={{ marginLeft: "1rem"}}>Profile</p>
       </MenuItem>
 
     </Menu>
   );
+
+  // ..............................................................................................................................................................................................................................................................
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           {/* Logo */}
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>Chat App</Typography>
-
+          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block', fontFamily: "'Oleo Script Swash Caps', cursive", fontSize: "2rem" } }}>Chat App</Typography>
+          <Box sx={{ flexGrow: 1 }} />
           {/* Search Input field */}
           <Search>
             <SearchIconWrapper>
@@ -158,9 +159,10 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
 
           {/* Left side icons */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "1rem" }}>
             <IconButton size="large" color="inherit"><Badge badgeContent={17} color="error"><NotificationsIcon /></Badge></IconButton>
-            <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton>
+            {/* <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton> */}
+            <IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box></IconButton>
           </Box>
 
           {/* For small screens */}
