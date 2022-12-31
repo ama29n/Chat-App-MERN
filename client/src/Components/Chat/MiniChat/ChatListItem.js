@@ -11,10 +11,10 @@ function ChatListItem() {
           justifyContent: "flex-start",
           alignItems: "center",
           gap: "1rem",
-          color: "white",
+          color: "black",
           cursor: "pointer",
           "&:hover": {
-            backgroundColor: "#0d1b2a",
+            backgroundColor: "#f5f3f4",
           },
         }}
       >
@@ -27,8 +27,8 @@ function ChatListItem() {
         </Box>
 
         <Box>
-          <p>Amandeep Singh</p>
-          <p style={{ fontSize: "14px", color: "#ced4da", fontWeight: "400" }}>
+          <p style={{ color: "#212529"}}>Amandeep Singh</p>
+          <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>
             Hello this is a message
           </p>
         </Box>

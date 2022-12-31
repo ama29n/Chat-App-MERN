@@ -12,8 +12,15 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from "react-router-dom";
 import userImage from "../../Resources/ProfilePicture.jpg";
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -80,6 +87,17 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setAnchorEl(false);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const navigate = useNavigate();
   
   const logoutHandler = (e) => {
@@ -102,7 +120,21 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleClickOpen}>Profile</MenuItem>
+      <Dialog open={open} onClose={handleClose} >
+        <DialogTitle>{"Amandeep Singh"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Box display="flex" width="500px" gap="2rem" alignItems="center">
+              <Box width="100px" height="100px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
+              <p>{"amandeep@amandeep.com"}</p>
+            </Box>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <MenuItem onClick={logoutHandler}>Log out</MenuItem>
     </Menu>
   );

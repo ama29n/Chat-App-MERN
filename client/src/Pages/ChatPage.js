@@ -2,14 +2,7 @@ import Header from "../Components/Chat/Navbar";
 import { Box } from "@mui/material";
 import Chatlist from "../Components/Chat/Chatlist";
 import Chatbox from "../Components/Chat/Chatbox";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 // import background from "../Resources/bg-2.jpg";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 function ChatPage() {
   return (
@@ -22,10 +15,8 @@ function ChatPage() {
           alignItems: "center",
         }}
       >
-        <ThemeProvider theme={darkTheme}>
-          <Chatlist />
-          <Chatbox />
-        </ThemeProvider>
+        <Chatlist />
+        <Chatbox />
       </Box>
     </Box>
   );

@@ -1,5 +1,5 @@
-import { Box, Button } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import { Box } from "@mui/material";
+import AddGroup from "./AddGroup";
 
 function ChatHeader() {
   return (
@@ -9,11 +9,11 @@ function ChatHeader() {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "1rem",
-        backgroundColor: "#0d1b2a"
+        backgroundColor: "White",
       }}
     >
-      <Box fontSize="1.5rem" color="white">My Chats</Box>
-      <Button variant="outlined" endIcon={<AddIcon />}>New Group</Button>
+      <Box fontSize="1.5rem" color="#495057">My Chats</Box>
+      <AddGroup />
     </Box>
   );
 }

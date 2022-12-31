@@ -8,7 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
   },
 });
 
@@ -77,8 +77,8 @@ const __StartPage_form_box = {
   width: "400px",
   borderRadius: "5px",
   boxShadow: "3px 3px 20px #858585",
-  backgroundColor: "#0d1b2a",
-  // backgroundColor: "White",
+  // backgroundColor: "#0d1b2a",
+  backgroundColor: "White",
   padding: "1.5rem",
   display: "flex",
   flexDirection: "column",
@@ -90,15 +90,16 @@ const __StartPage_heading_box = {
   width: "400px",
   borderRadius: "5px",
   boxShadow: "3px 3px 20px #858585",
-  backgroundColor: "#0d1b2a",
-  // backgroundColor: "White",
+  // backgroundColor: "#0d1b2a",
+  backgroundColor: "White",
   padding: "1rem",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   marginBottom: "1rem",
   fontSize: "3rem",
-  color: "rgb(144,202,249)",
+  // color: "rgb(144,202,249)",
+  color: "#1976D2",
   fontWeight: "500",
   fontFamily: "'Oleo Script Swash Caps', cursive",
 };

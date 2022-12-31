@@ -7,12 +7,10 @@ function Chatlist() {
     <Box sx={{
       flex: "30%",
       width: "100%",
-      // backgroundColor: "#202C33",
-      // backgroundColor: "#111B21",
-      // backgroundColor: "#051923",
-      backgroundColor: "#03141F",
+      // backgroundColor: "#f8f9fa",
+      backgroundColor: "#faf9f9",
       height: "91vh",
-      borderRight: "1px solid #272E34",
+      borderRight: "1px solid #E6E6E6",
       overflowY: "scroll",
     }}>
       <ChatHeader />
