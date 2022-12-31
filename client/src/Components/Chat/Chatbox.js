@@ -16,7 +16,6 @@ function Chatbox() {
         backgroundSize: "contain",
       }}
     >
-      Aman
     </Box>
   );
 }

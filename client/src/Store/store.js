@@ -8,11 +8,6 @@ const userInitialState = {
   token: "",
 };
 
-const authInitialState = {
-  token: "",
-  isLoggedIn: false,
-};
-
 const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
@@ -30,6 +25,11 @@ const userSlice = createSlice({
   },
 });
 
+const authInitialState = {
+  token: "",
+  isLoggedIn: false,
+};
+
 const authSlice = createSlice({
   name: "auth",
   initialState: authInitialState,
@@ -45,13 +45,38 @@ const authSlice = createSlice({
   },
 });
 
+const chatInitialState = {
+  chatList: [],
+  selectedChat: {},
+};
+
+const chatSlice = createSlice({
+  name: "chat",
+  initialState: chatInitialState,
+  reducers: {
+    setChatList(state, action) {
+      state.chatList = action.payload;
+    },
+    setSelectedChat(state, action) {
+      state.selectedChat = action.payload;
+    },
+    clear(state) {
+      state.chatList = [];
+      state.selectedChat = {};
+    }
+  },
+});
+
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
     auth: authSlice.reducer,
+    chat: chatSlice.reducer,
   },
 });
 
 export const userActions = userSlice.actions;
 export const authActions = authSlice.actions;
+export const chatActions = chatSlice.actions;
+
 export default store;

@@ -19,7 +19,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from "react-router-dom";
 import userImage from "../../Resources/ProfilePicture.jpg";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions, userActions } from '../../Store/store';
+import { authActions, chatActions, userActions } from '../../Store/store';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -104,12 +104,11 @@ export default function Navbar() {
     return state.user;
   });
 
-  console.log(user);
-  
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(userActions.deleteUser());
     dispatch(authActions.logout());
+    dispatch(chatActions.clear());
     navigate("/");
   }
 

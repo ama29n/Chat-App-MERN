@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { TextField, Box, IconButton, InputAdornment, Button } from "@mui/material";
+import {
+  TextField,
+  Box,
+  IconButton,
+  InputAdornment,
+  Button,
+} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PrimaryButton from "../Common/PrimaryButton";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions, authActions } from "../../Store/store";
 
@@ -22,21 +27,20 @@ function LoginForm() {
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
   };
-  const navigate = useNavigate();
   const loginHandler = (e) => {
     e.preventDefault();
-    axios.post("/user/login", {
-      email: email,
-      password: password
-    })
-    .then(res => {
-      dispatch(userActions.setUser(res.data));
-      dispatch(authActions.login(res.data.token));
-      navigate("/chat");
-    })
-    .catch(error => {
-      alert(error.response.data)
-    });
+    axios
+      .post("/user/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        dispatch(userActions.setUser(res.data));
+        dispatch(authActions.login(res.data.token));
+      })
+      .catch((error) => {
+        alert(error.response.data);
+      });
   };
   const defualtUserCredentialsHandler = (e) => {
     e.preventDefault();
@@ -69,7 +73,9 @@ function LoginForm() {
         {...{ type: showVisibility ? null : "password" }}
       />
       <PrimaryButton clickHandler={loginHandler} buttonText="Login" />
-      <Button variant="outlined" onClick={defualtUserCredentialsHandler}>Get User Credential</Button>
+      <Button variant="outlined" onClick={defualtUserCredentialsHandler}>
+        Get User Credential
+      </Button>
     </Box>
   );
 }
