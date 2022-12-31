@@ -5,8 +5,11 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PrimaryButton from "../Common/PrimaryButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions, authActions } from "../../Store/store";
 
 function LoginForm() {
+  const dispatch = useDispatch();
   const [showVisibility, setShowVisibility] = useState(false);
   const showVisibilityHandler = () => {
     setShowVisibility((prev) => !prev);
@@ -27,7 +30,8 @@ function LoginForm() {
       password: password
     })
     .then(res => {
-      console.log(res.data);
+      dispatch(userActions.setUser(res.data));
+      dispatch(authActions.login(res.data.token));
       navigate("/chat");
     })
     .catch(error => {

@@ -15,12 +15,11 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from "react-router-dom";
 import userImage from "../../Resources/ProfilePicture.jpg";
-
+import { useSelector, useDispatch } from "react-redux";
+import { authActions, userActions } from '../../Store/store';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -99,11 +98,22 @@ export default function Navbar() {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => {
+    return state.user;
+  });
+
+  console.log(user);
   
   const logoutHandler = (e) => {
     e.preventDefault();
+    dispatch(userActions.deleteUser());
+    dispatch(authActions.logout());
     navigate("/");
   }
+
+  // .............................................................................................................................................................................................................................................................
 
   const renderMenu = (
     <Menu
@@ -122,17 +132,13 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleClickOpen}>Profile</MenuItem>
       <Dialog open={open} onClose={handleClose} >
-        <DialogTitle>{"Amandeep Singh"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <Box display="flex" width="500px" gap="2rem" alignItems="center">
-              <Box width="100px" height="100px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
-              <p>{"amandeep@amandeep.com"}</p>
-            </Box>
-          </DialogContentText>
-        </DialogContent>
+        <DialogTitle>{user.name}</DialogTitle>
+          <Box display="flex" width="500px" gap="2rem" alignItems="center" padding="2rem">
+            <Box width="100px" height="100px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
+            <p style={{ color: "black" }}>{user.email}</p>
+          </Box>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button variant="outlined" onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
       <MenuItem onClick={logoutHandler}>Log out</MenuItem>

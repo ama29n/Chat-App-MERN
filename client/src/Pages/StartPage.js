@@ -48,11 +48,6 @@ export default StartPage;
 // Styles
 
 const __StartPage_outer_box = {
-  // background: `url(${background})`,
-  // backgroundColor: "#c5c5c5",
-  // backgroundBlendMode: "multiply",
-  // filter: "blur(5px)",
-  // backgroundSize: "cover",
   width: "100%",
   height: "100vh",
   display: "flex",
@@ -63,8 +58,6 @@ const __StartPage_outer_box = {
 
 const __StartPage_background_box = {
   background: `url(${background})`,
-  // backgroundColor: "grey",
-  // backgroundBlendMode: "multiply",
   filter: "blur(4px)",
   backgroundSize: "cover",
   width: "100%",
@@ -77,7 +70,6 @@ const __StartPage_form_box = {
   width: "400px",
   borderRadius: "5px",
   boxShadow: "3px 3px 20px #858585",
-  // backgroundColor: "#0d1b2a",
   backgroundColor: "White",
   padding: "1.5rem",
   display: "flex",
@@ -90,7 +82,6 @@ const __StartPage_heading_box = {
   width: "400px",
   borderRadius: "5px",
   boxShadow: "3px 3px 20px #858585",
-  // backgroundColor: "#0d1b2a",
   backgroundColor: "White",
   padding: "1rem",
   display: "flex",
@@ -98,7 +89,6 @@ const __StartPage_heading_box = {
   justifyContent: "center",
   marginBottom: "1rem",
   fontSize: "3rem",
-  // color: "rgb(144,202,249)",
   color: "#1976D2",
   fontWeight: "500",
   fontFamily: "'Oleo Script Swash Caps', cursive",
