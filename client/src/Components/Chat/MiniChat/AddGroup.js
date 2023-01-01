@@ -31,7 +31,9 @@ function AddGroup() {
         <DialogContent>
           <Box sx={__AddGroup_box}>
             <CustomInput />
-            <Box width="450px" height="200px" overflowY="scroll"></Box>
+            <Box marginTop="20px" width="450px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" boxShadow="1px 1px 10px #f1f1f1">
+
+            </Box>
           </Box>
         </DialogContent>
 

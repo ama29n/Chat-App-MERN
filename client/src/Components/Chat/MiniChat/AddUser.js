@@ -69,19 +69,19 @@ function AddUser() {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Box sx={__AddGroup_box}>
-            <CustomInput value={searchedUser} changeHandler={searchedUserChangeHandler} />
-            <Box width="450px" height="200px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" gap="1rem">
+            <CustomInput value={searchedUser} changeHandler={searchedUserChangeHandler} placeholder="Enter name or email" />
+            <Box marginTop="20px" width="450px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" boxShadow="1px 1px 10px #f1f1f1">
                 {searchedUserList.length > 0 ? searchedUserList.map(listUser => {
                     return (
                         <Box>
-                            <Box key={listUser._id} id={listUser._id} display="flex" gap="1rem" alignItems="center" padding="0.5rem" sx={{ cursor: "pointer"}} onClick={addNewUserHandler}>
+                          <Box key={listUser._id} id={listUser._id} display="flex" gap="1rem" alignItems="center" padding="1rem" sx={{ cursor: "pointer"}} onClick={addNewUserHandler}>
                             <Box id={listUser._id} height="50px" width="50px"><img id={listUser._id} style={{ height: "auto", width: "100%", borderRadius: "50%" }} alt="listUser" src={listUser.profilePhoto} /></Box>
                             <Box id={listUser._id}>
                                 <p id={listUser._id} style={{ color: "#212529"}}>{listUser.name}</p>
                                 <p id={listUser._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{listUser.email}</p>
                             </Box>
-                        </Box>
-                        <Divider />
+                          </Box>
+                          <Divider />
                         </Box>
                     );
                 }) : null}

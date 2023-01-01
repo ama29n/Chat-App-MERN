@@ -1,11 +1,12 @@
 import { Box } from "@mui/material";
 
-function CustomInput({ value, changeHandler }) {
+function CustomInput({ value, changeHandler, placeholder }) {
   return (
     <Box>
       <input
         value={value}
         onChange={changeHandler}
+        placeholder={placeholder}
         style={{
           outline: "none",
           padding: "0.75rem 1rem",
