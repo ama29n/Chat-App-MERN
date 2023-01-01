@@ -6,7 +6,6 @@ import { chatActions } from "../../../Store/store";
 function ChatListItem({ chat }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const selectedChat = useSelector((state) => state.chat.selectedChat);
   let name;
   if(chat.chatName === "sender") {
     name = chat.users[0].name === user.name ? chat.users[1].name : chat.users[0].name;
@@ -17,12 +16,12 @@ function ChatListItem({ chat }) {
     e.preventDefault();
     dispatch(chatActions.setSelectedChat(chat));
   };
-  console.log(selectedChat);
   return (
     <>
       <Box sx={__ChatListItem_box} key={chat._id} id={chat._id} onClick={selectHandler}>
-        <Box width="50px" height="50px">
+        <Box id={chat._id} width="50px" height="50px">
           <img
+            id={chat._id}
             alt="user"
             src={userImage}
             style={{ height: "auto", width: "100%", borderRadius: "50%" }}
@@ -30,8 +29,8 @@ function ChatListItem({ chat }) {
         </Box>
 
         <Box>
-          <p style={{ color: "#212529"}}>{name}</p>
-          <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>
+          <p id={chat._id} style={{ color: "#212529"}}>{name}</p>
+          <p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>
             Hello this is a message
           </p>
         </Box>

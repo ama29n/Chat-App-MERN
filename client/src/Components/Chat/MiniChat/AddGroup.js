@@ -24,7 +24,7 @@ function AddGroup() {
         onClick={handleClickOpen}
         endIcon={<AddIcon />}
       >
-        New Group
+        Create Group
       </Button>
       <Dialog open={open} onClose={handleClose}>
 

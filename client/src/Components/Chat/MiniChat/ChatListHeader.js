@@ -1,19 +1,24 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import AddGroup from "./AddGroup";
+import AddUser from "./AddUser";
 
 function ChatHeader() {
   return (
     <Box
       sx={{
         display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "1rem",
+        flexDirection: "column",
         backgroundColor: "White",
       }}
     >
-      <Box fontSize="1.5rem" color="#495057">My Chats</Box>
-      <AddGroup />
+      <Box display="flex" justifyContent="space-between" p="1rem">
+        <AddUser />
+        <AddGroup />
+      </Box>
+      <Divider />
+      <Box fontSize="1.5rem" color="#495057" fontWeight="500" p="1rem">
+        My Chats
+      </Box>
     </Box>
   );
 }
