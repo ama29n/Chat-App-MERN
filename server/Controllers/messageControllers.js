@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 
 const sendMessage = asyncHandler(async (req, res) => {
   const { message, chatId } = req.body;
-  if (!message || !chatId) {
+  if (!message || !chatId || message.length < 1) {
     res.status(400).send("Message or chat id missing");
   }
   try {

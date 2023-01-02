@@ -78,7 +78,7 @@ function AddUser() {
               <Box marginTop="10px" width="470px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" border="1px solid #d6d6d7">
                 {searchedUserList.length > 0 ? searchedUserList.map(listUser => {
                     return (
-                        <Box>
+                        <Box key={listUser._id}>
                           <Box key={listUser._id} id={listUser._id} display="flex" gap="1rem" alignItems="center" padding="1rem">
                             <Box id={listUser._id} height="50px" width="50px"><img id={listUser._id} style={{ height: "auto", width: "100%", borderRadius: "50%" }} alt="listUser" src={listUser.profilePhoto} /></Box>
                             <Box id={listUser._id}>

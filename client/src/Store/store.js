@@ -48,6 +48,7 @@ const authSlice = createSlice({
 const chatInitialState = {
   chatList: [],
   selectedChat: {},
+  chatMessages: [],
 };
 
 const chatSlice = createSlice({
@@ -60,9 +61,13 @@ const chatSlice = createSlice({
     setSelectedChat(state, action) {
       state.selectedChat = action.payload;
     },
+    setChatMessages(state, action) {
+      state.chatMessages = action.payload;
+    },
     clear(state) {
       state.chatList = [];
       state.selectedChat = {};
+      state.chatMessages = [];
     }
   },
 });

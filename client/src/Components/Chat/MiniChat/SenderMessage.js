@@ -4,6 +4,7 @@ function SenderMessage({ id, message }) {
   return (
     <Box
       id={id}
+      key={id}
       sx={{
         maxWidth: "70%",
         width: "fit-content",

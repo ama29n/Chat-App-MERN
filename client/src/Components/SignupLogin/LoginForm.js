@@ -39,7 +39,7 @@ function LoginForm() {
   };
   const defualtUserCredentialsHandler = (e) => {
     e.preventDefault();
-    setEmail("johndoe@johndoe.com");
+    setEmail("johndoe@gmail.com");
     setPassword("johndoe");
   };
   return (
