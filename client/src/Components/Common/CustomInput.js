@@ -13,7 +13,7 @@ function CustomInput({ value, changeHandler, placeholder }) {
           borderRadius: "5px",
           fontSize: "1rem",
           border: "2px solid #3B8AD9",
-          color: "black",
+          color: "#212529",
           width: "30ch",
         }}
       />

@@ -119,7 +119,7 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" color="inherit"><Badge badgeContent={17} color="error"><NotificationsIcon /></Badge></IconButton>
+        <IconButton size="large" color="inherit"><Badge badgeContent={0} color="error"><NotificationsIcon /></Badge></IconButton>
         <p style={{ marginLeft: "1rem"}}>Notifications</p>
       </MenuItem>
 
@@ -148,7 +148,7 @@ export default function Navbar() {
 
           {/* Left side icons */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "1rem" }}>
-            <IconButton size="large" color="inherit"><Badge badgeContent={17} color="error"><NotificationsIcon /></Badge></IconButton>
+            <IconButton size="large" color="inherit"><Badge badgeContent={0} color="error"><NotificationsIcon /></Badge></IconButton>
             {/* <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton> */}
             <IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box></IconButton>
           </Box>

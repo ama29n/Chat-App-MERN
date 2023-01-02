@@ -4,13 +4,6 @@ import { Box } from "@mui/material";
 import SignupForm from "../Components/SignupLogin/SignupForm";
 import LoginForm from "../Components/SignupLogin/LoginForm";
 import background from "../Resources/bg-2.jpg";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "light",
-  },
-});
 
 function StartPage() {
   const [action, setAction] = useState("login");
@@ -26,20 +19,18 @@ function StartPage() {
     setAction("login");
   };
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Box sx={__StartPage_outer_box}>
-        <Box sx={__StartPage_background_box}></Box>
-        <Box sx={__StartPage_heading_box}>Chat App</Box>
-        <Box sx={__StartPage_form_box}>
-          <ToggleButton action={action} changeAction={changeAction} />
-          {action === "login" ? (
-            <LoginForm />
-          ) : (
-            <SignupForm successfullRegister={successfullRegister} />
-          )}
-        </Box>
+    <Box sx={__StartPage_outer_box}>
+      <Box sx={__StartPage_background_box}></Box>
+      <Box sx={__StartPage_heading_box}>Chat App</Box>
+      <Box sx={__StartPage_form_box}>
+        <ToggleButton action={action} changeAction={changeAction} />
+        {action === "login" ? (
+          <LoginForm />
+        ) : (
+          <SignupForm successfullRegister={successfullRegister} />
+        )}
       </Box>
-    </ThemeProvider>
+    </Box>
   );
 }
 

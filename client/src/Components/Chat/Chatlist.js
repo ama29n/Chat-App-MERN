@@ -7,8 +7,8 @@ import { useEffect } from "react";
 import axios from "axios";
 
 function Chatlist() {
+  const URL = process.env.REACT_APP_URL;
   const dispatch = useDispatch();
-  // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const chatList = useSelector((state) => state.chat.chatList);
   const user = useSelector((state) => state.user);
 
@@ -17,7 +17,7 @@ function Chatlist() {
       return;
     const getChatList = async () => {
       try {
-        const list = await axios.get("http://localhost:3010/chat", {
+        const list = await axios.get(URL + "/chat", {
           headers: {
             'Authorization': 'Bearer ' + user.token
           }
@@ -28,7 +28,7 @@ function Chatlist() {
       }
     };
     getChatList();
-  }, [user.token, dispatch, user.token.length]);
+  }, [user.token, dispatch, user.token.length, URL]);
 
   return (
     <Box sx={__Chatlist_box}>

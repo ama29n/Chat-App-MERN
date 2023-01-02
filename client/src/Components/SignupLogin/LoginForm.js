@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  TextField,
-  Box,
-  IconButton,
-  InputAdornment,
-  Button,
-} from "@mui/material";
+import { TextField, Box, IconButton, InputAdornment, Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import PrimaryButton from "../Common/PrimaryButton";
@@ -14,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { userActions, authActions } from "../../Store/store";
 
 function LoginForm() {
+  const URL = process.env.REACT_APP_URL;
   const dispatch = useDispatch();
   const [showVisibility, setShowVisibility] = useState(false);
   const showVisibilityHandler = () => {
@@ -30,7 +25,7 @@ function LoginForm() {
   const loginHandler = (e) => {
     e.preventDefault();
     axios
-      .post("/user/login", {
+      .post(URL + "/user/login", {
         email: email,
         password: password,
       })

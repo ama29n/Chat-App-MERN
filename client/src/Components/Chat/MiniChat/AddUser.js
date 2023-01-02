@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 
 function AddUser() {
+  const URL = process.env.REACT_APP_URL;
   const dispatch = useDispatch();
   const [searchedUser, setSearchedUser] = useState("");
   const searchedUserChangeHandler = (e) => {
@@ -31,7 +32,7 @@ function AddUser() {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `http://localhost:3010/user/search?input=${searchedUser}`,
+        `${URL}/user/search?input=${searchedUser}`,
         {
           headers: {
             Authorization: "Bearer " + user.token,
@@ -45,13 +46,14 @@ function AddUser() {
   };
   const addNewUserHandler = async (e) => {
     try {
-        const response1 = await axios.post("http://localhost:3010/chat", {userId: e.target.id}, {
+        console.log(e.target.id);
+        const response1 = await axios.post(URL + "/chat", {userId: e.target.id}, {
             headers: {
                 "Authorization": "Bearer " + user.token,
             },
         });
         dispatch(chatActions.setSelectedChat(response1.data));
-        const response2 = await axios.get("http://localhost:3010/chat", {
+        const response2 = await axios.get(URL + "/chat", {
             headers: {
                 "Authorization": "Bearer " + user.token,
             },
@@ -70,19 +72,21 @@ function AddUser() {
         <DialogContent>
           <Box sx={__AddGroup_box}>
             <CustomInput value={searchedUser} changeHandler={searchedUserChangeHandler} placeholder="Enter name or email" />
-            {searchedUserList.length < 1 ? <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>Search empty to see all users</p> : null}
+            {searchedUserList.length < 1 ? <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>Search with empty field to see all users</p> : null}
 
             {searchedUserList.length > 0 ? 
-              <Box marginTop="20px" width="450px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" border="1px solid #d6d6d7">
+              <Box marginTop="10px" width="470px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" border="1px solid #d6d6d7">
                 {searchedUserList.length > 0 ? searchedUserList.map(listUser => {
                     return (
                         <Box>
-                          <Box key={listUser._id} id={listUser._id} display="flex" gap="1rem" alignItems="center" padding="1rem" sx={{ cursor: "pointer"}} onClick={addNewUserHandler}>
+                          <Box key={listUser._id} id={listUser._id} display="flex" gap="1rem" alignItems="center" padding="1rem">
                             <Box id={listUser._id} height="50px" width="50px"><img id={listUser._id} style={{ height: "auto", width: "100%", borderRadius: "50%" }} alt="listUser" src={listUser.profilePhoto} /></Box>
                             <Box id={listUser._id}>
                                 <p id={listUser._id} style={{ color: "#212529"}}>{listUser.name}</p>
                                 <p id={listUser._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{listUser.email}</p>
                             </Box>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Button variant="outlined" id={listUser._id} onClick={addNewUserHandler} endIcon={<PersonAddAltIcon />}>Add</Button>
                           </Box>
                           <Divider />
                         </Box>

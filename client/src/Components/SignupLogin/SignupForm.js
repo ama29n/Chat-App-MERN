@@ -6,6 +6,7 @@ import PrimaryButton from "../Common/PrimaryButton";
 import axios from "axios";
 
 function SignupForm({ successfullRegister }) {
+  const URL = process.env.REACT_APP_URL;
   const userImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   const tickImage = "http://www.clker.com/cliparts/G/e/b/2/O/0/blue-check-mark-md.png";
 
@@ -33,11 +34,11 @@ function SignupForm({ successfullRegister }) {
 
   const signUpHandler = (e) => {
     e.preventDefault();
-    axios.post("/user/register", {
+    axios.post(URL + "/user/register", {
       name: name,
       email: email,
       password: password,
-      profilePhoto: profilePhoto
+      profilePhoto: userImage
     })
     .then(res => {
       setName("");
