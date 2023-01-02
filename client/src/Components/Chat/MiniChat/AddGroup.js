@@ -23,6 +23,7 @@ function AddGroup() {
         variant="outlined"
         onClick={handleClickOpen}
         endIcon={<AddIcon />}
+        disabled
       >
         Create Group
       </Button>

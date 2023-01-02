@@ -12,7 +12,6 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from "react-router-dom";
 import userImage from "../../Resources/ProfilePicture.jpg";
 import { useSelector, useDispatch } from "react-redux";
@@ -89,10 +88,12 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleClickOpen}>Profile</MenuItem>
       <Dialog open={open} onClose={handleClose} >
-        <DialogTitle>{user.name}</DialogTitle>
-          <Box display="flex" width="500px" gap="2rem" alignItems="center" padding="2rem">
-            <Box width="100px" height="100px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
-            <p style={{ color: "black" }}>{user.email}</p>
+          <Box display="flex" gap="2rem" alignItems="center" padding="2rem">
+            <Box width="150px" height="150px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
+            <Box>
+              <p style={{ fontSize: "2rem", color: "#212529"}}>{user.name}</p>
+              <p style={{ fontSize: "1.2rem", fontWeight: "400", color: "#495057" }}>{user.email}</p>
+            </Box>
           </Box>
         <DialogActions>
           <Button variant="outlined" onClick={handleClose}>Close</Button>

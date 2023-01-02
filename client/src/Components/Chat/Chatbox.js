@@ -1,7 +1,10 @@
 import { Box } from "@mui/material";
 import background from "../../Resources/bg-10.jpg";
+import { useSelector } from "react-redux";
+import ChatHeader from "./MiniChat/ChatHeader";
 
 function Chatbox() {
+  const selectedChat = useSelector((state) => state.chat.selectedChat);
   return (
     <Box
       sx={{
@@ -9,13 +12,17 @@ function Chatbox() {
         width: "100%",
         backgroundColor: "White",
         height: "91vh",
-        padding: "2rem",
         overflowY: "scroll",
         borderBottom: "8px solid #1976D2",
         backgroundImage: `url(${background})`,
         backgroundSize: "contain",
       }}
     >
+      {selectedChat._id && (
+        <Box>
+          <ChatHeader chat={selectedChat} />
+        </Box>
+      )}
     </Box>
   );
 }

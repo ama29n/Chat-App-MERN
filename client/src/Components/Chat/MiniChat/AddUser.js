@@ -40,7 +40,7 @@ function AddUser() {
       );
       setSearchedUserList(response.data);
     } catch (error) {
-      console.log(error);
+      alert(error.response.data);
     }
   };
   const addNewUserHandler = async (e) => {
@@ -70,7 +70,10 @@ function AddUser() {
         <DialogContent>
           <Box sx={__AddGroup_box}>
             <CustomInput value={searchedUser} changeHandler={searchedUserChangeHandler} placeholder="Enter name or email" />
-            <Box marginTop="20px" width="450px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" boxShadow="1px 1px 10px #f1f1f1">
+            {searchedUserList.length < 1 ? <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>Search empty to see all users</p> : null}
+
+            {searchedUserList.length > 0 ? 
+              <Box marginTop="20px" width="450px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" border="1px solid #d6d6d7">
                 {searchedUserList.length > 0 ? searchedUserList.map(listUser => {
                     return (
                         <Box>
@@ -85,7 +88,9 @@ function AddUser() {
                         </Box>
                     );
                 }) : null}
-            </Box>
+              </Box>
+            : null}
+
           </Box>
         </DialogContent>
 
