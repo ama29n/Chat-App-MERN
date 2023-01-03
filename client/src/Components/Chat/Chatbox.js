@@ -21,7 +21,7 @@ function Chatbox() {
     socket.emit("setup", user);
     socket.on("connection", () => setsocketConnected(true));
   }, [user]);
-
+  console.log(socketConnected);
   return (
     <Box
       sx={{

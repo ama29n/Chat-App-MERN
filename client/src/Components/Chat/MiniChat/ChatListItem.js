@@ -6,11 +6,20 @@ import { chatActions } from "../../../Store/store";
 function ChatListItem({ chat }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  let name;
+  let name, sender;
   if(chat.chatName === "sender") {
-    name = chat.users[0].name === user.name ? chat.users[1].name : chat.users[0].name;
+    if(chat.users[0].name === user.name) {
+      name = chat.users[1].name;
+    } else {
+      name = chat.users[0].name;
+    }
   } else {
     name = chat.chatName;
+  }
+  if(chat.latestMessage.sender.name === user.name) {
+    sender = "You";
+  } else {
+    sender = chat.latestMessage.sender.name.split(" ")[0];
   }
   const selectHandler = (e) => {
     e.preventDefault();
@@ -30,9 +39,10 @@ function ChatListItem({ chat }) {
 
         <Box>
           <p id={chat._id} style={{ color: "#212529"}}>{name}</p>
-          <p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>
-            Hello this is a message
-          </p>
+          <Box display="flex" gap="0.25rem" alignItems="center">
+            <p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{sender}:</p>
+            <Box width="140px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}><p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{chat.latestMessage.content}</p></Box>
+          </Box>
         </Box>
       </Box>
       <Divider />

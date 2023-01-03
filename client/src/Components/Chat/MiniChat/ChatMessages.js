@@ -39,8 +39,9 @@ function ChatMessages({ socket }) {
         // give notification
       } else {
         getMessages();
+        dispatch(chatActions.updateLatestMessage({ chatId: selectedChat._id, message: newMessageRecieved }));
       }
-    })
+    });
   });
 
   // Scroll to Bottom

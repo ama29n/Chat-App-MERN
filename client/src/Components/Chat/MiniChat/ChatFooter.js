@@ -31,6 +31,7 @@ function ChatFooter({ socket }) {
       );
       socket.emit("new message", response.data);
       dispatch(chatActions.setChatMessages([...messages, response.data]));
+      dispatch(chatActions.updateLatestMessage({ chatId: selectedChat._id, message: response.data }));
       setMessage("");
     } catch (error) {
       console.log(error);

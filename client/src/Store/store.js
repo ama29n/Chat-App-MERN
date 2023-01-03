@@ -64,6 +64,16 @@ const chatSlice = createSlice({
     setChatMessages(state, action) {
       state.chatMessages = action.payload;
     },
+    updateLatestMessage(state, action) {
+      const { chatId, message } = action.payload;
+      let newChatList = state.chatList.map((chat) => {
+        if(JSON.stringify(chat._id) === JSON.stringify(chatId)) {
+          chat.latestMessage = message;
+        }
+        return chat;
+      });
+      state.chatList = newChatList;
+    },
     clear(state) {
       state.chatList = [];
       state.selectedChat = {};
