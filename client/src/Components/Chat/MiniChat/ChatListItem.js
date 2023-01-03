@@ -16,9 +16,9 @@ function ChatListItem({ chat }) {
   } else {
     name = chat.chatName;
   }
-  if(chat.latestMessage.sender && chat.latestMessage.sender.name === user.name) {
+  if(chat.latestMessage && chat.latestMessage.sender.name === user.name) {
     sender = "You";
-  } else if(chat.latestMessage.sender) {
+  } else if(chat.latestMessage) {
     sender = chat.latestMessage.sender.name.split(" ")[0];
   }
   const selectHandler = (e) => {
