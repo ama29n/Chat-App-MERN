@@ -6,7 +6,7 @@ import { chatActions } from "../../../Store/store";
 function ChatListItem({ chat }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  let name, sender;
+  let name, sender = null;
   if(chat.chatName === "sender") {
     if(chat.users[0].name === user.name) {
       name = chat.users[1].name;
@@ -16,9 +16,9 @@ function ChatListItem({ chat }) {
   } else {
     name = chat.chatName;
   }
-  if(chat.latestMessage.sender.name === user.name) {
+  if(chat.latestMessage.sender && chat.latestMessage.sender.name === user.name) {
     sender = "You";
-  } else {
+  } else if(chat.latestMessage.sender) {
     sender = chat.latestMessage.sender.name.split(" ")[0];
   }
   const selectHandler = (e) => {
@@ -39,10 +39,12 @@ function ChatListItem({ chat }) {
 
         <Box>
           <p id={chat._id} style={{ color: "#212529"}}>{name}</p>
-          <Box display="flex" gap="0.25rem" alignItems="center">
-            <p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{sender}:</p>
-            <Box width="140px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}><p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{chat.latestMessage.content}</p></Box>
-          </Box>
+          {sender && (
+            <Box display="flex" gap="0.25rem" alignItems="center">
+              <p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{sender}:</p>
+              <Box width="140px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}><p id={chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{chat.latestMessage.content}</p></Box>
+            </Box>
+          )}
         </Box>
       </Box>
       <Divider />
