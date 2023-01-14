@@ -88,6 +88,7 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleClickOpen}>Profile</MenuItem>
       <Dialog open={open} onClose={handleClose} >
+          <Box padding="2rem 2rem 0 2rem" fontSize="1.2rem" color="#212529">Your Profile</Box>
           <Box display="flex" gap="2rem" alignItems="center" padding="2rem">
             <Box width="150px" height="150px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
             <Box>
@@ -138,7 +139,7 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar>
           {/* Logo */}
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block', fontFamily: "'Oleo Script Swash Caps', cursive", fontSize: "2rem" } }}>Chat App</Typography>
+          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block', fontFamily: "'Oleo Script Swash Caps', cursive", fontSize: "2rem" } }}>Hi You</Typography>
           <Box sx={{ flexGrow: 1 }} />
           {/* Search Input field */}
           

@@ -1,9 +1,9 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, CircularProgress } from "@mui/material";
 import ChatHeader from "./MiniChat/ChatListHeader";
 import ChatListItem from "./MiniChat/ChatListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../Store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Chatlist() {
@@ -11,10 +11,11 @@ function Chatlist() {
   const dispatch = useDispatch();
   const chatList = useSelector((state) => state.chat.chatList);
   const user = useSelector((state) => state.user);
-
+  const [isLoading, setIsLoading] = useState();
   useEffect(() => {
     if(user.token.length === 0)
       return;
+    setIsLoading(true);
     const getChatList = async () => {
       try {
         const list = await axios.get(URL + "/chat", {
@@ -23,18 +24,20 @@ function Chatlist() {
           }
         });
         dispatch(chatActions.setChatList(list.data));
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
     getChatList();
   }, [user.token, dispatch, user.token.length, URL]);
-
+  
   return (
     <Box sx={__Chatlist_box}>
       <ChatHeader />
       <Divider />
       <Box>
+        {isLoading && <Box height="100%" display="flex" justifyContent="center"><CircularProgress /></Box>}
         {chatList.length > 0 ? chatList.map(chat => (<ChatListItem chat={chat} key={chat._id} />)) : null}
       </Box>
     </Box>

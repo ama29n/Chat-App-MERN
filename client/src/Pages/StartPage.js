@@ -21,7 +21,7 @@ function StartPage() {
   return (
     <Box sx={__StartPage_outer_box}>
       <Box sx={__StartPage_background_box}></Box>
-      <Box sx={__StartPage_heading_box}>Chat App</Box>
+      <Box sx={__StartPage_heading_box}>Hi You</Box>
       <Box sx={__StartPage_form_box}>
         <ToggleButton action={action} changeAction={changeAction} />
         {action === "login" ? (

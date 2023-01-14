@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import SenderMessage from "./SenderMessage";
 import ReceiverMessage from "./ReceiverMessage";
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 import axios from "axios";
@@ -15,10 +15,13 @@ function ChatMessages({ socket }) {
   const user = useSelector((state) => state.user);
   const selectedChat = useSelector((state) => state.chat.selectedChat);
 
+  const [isLoading, setIsLoading] = useState();
+
   const messages = useSelector((state) => state.chat.chatMessages);
 
   // To load the messages
   const getMessages = useCallback(async () => {
+    setIsLoading(true);
     const response = await axios.get(URL + "/message/" + selectedChat._id, {
       headers: {
         Authorization: "Bearer " + user.token,
@@ -26,6 +29,7 @@ function ChatMessages({ socket }) {
     });
     dispatch(chatActions.setChatMessages(response.data));
     socket.emit("join chat", selectedChat._id);
+    setIsLoading(false);
   }, [selectedChat, URL, user, socket, dispatch]);
 
   useEffect(() => {
@@ -55,6 +59,8 @@ function ChatMessages({ socket }) {
 
   return (
     <Box sx={__ChatMessages_box}>
+      
+      {isLoading && <Box height="100%" display="flex" justifyContent="center"><CircularProgress /></Box>}
       {messages.length > 0 ? (
         messages.map(message => {
             if(message.sender.name === user.name) {

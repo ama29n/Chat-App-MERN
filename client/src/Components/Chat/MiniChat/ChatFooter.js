@@ -18,7 +18,6 @@ function ChatFooter({ socket }) {
 
   // Send message to a user
   const messageSendHandler = async (e) => {
-    e.preventDefault();
     try {
       const response = await axios.post(
         URL + "/message",
@@ -46,6 +45,7 @@ function ChatFooter({ socket }) {
           onChange={messageChangeHandler}
           placeholder="Write a message..."
           style={__ChatFooter_input}
+          onKeyDown={(e) => { if(e.key === "Enter") messageSendHandler(); }}
         />
       </Box>
       <Button
