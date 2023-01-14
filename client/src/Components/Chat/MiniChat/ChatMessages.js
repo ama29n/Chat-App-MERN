@@ -3,7 +3,7 @@ import SenderMessage from "./SenderMessage";
 import ReceiverMessage from "./ReceiverMessage";
 import { useRef, useEffect, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { chatActions } from "../../../Store/store";
+import { chatActions, notificationActions } from "../../../Store/store";
 import axios from "axios";
 
 var selectedChatCompare;
@@ -18,6 +18,7 @@ function ChatMessages({ socket }) {
   const [isLoading, setIsLoading] = useState();
 
   const messages = useSelector((state) => state.chat.chatMessages);
+  const notifications = useSelector((state) => state.notification.notifications);
 
   // To load the messages
   const getMessages = useCallback(async () => {
@@ -40,10 +41,12 @@ function ChatMessages({ socket }) {
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if(!selectedChatCompare || JSON.stringify(newMessageRecieved.chat._id) !== JSON.stringify(selectedChatCompare._id)) {
-        // give notification
+        console.log("notif");
+        dispatch(notificationActions.setNotifications([newMessageRecieved, ...notifications]));
+        dispatch(chatActions.updateLatestMessage({ chatId: newMessageRecieved.chat._id, message: newMessageRecieved }));
       } else {
         dispatch(chatActions.setChatMessages([...messages, newMessageRecieved]));
-        if(JSON.stringify(newMessageRecieved.chat._id) === JSON.stringify(selectedChatCompare._id))
+        if(JSON.stringify(newMessageRecieved.chat._id) === JSON.stringify(selectedChat._id))
           dispatch(chatActions.updateLatestMessage({ chatId: selectedChat._id, message: newMessageRecieved }));
       }
     });

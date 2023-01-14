@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ChatHeader from "./MiniChat/ChatHeader";
 import ChatFooter from "./MiniChat/ChatFooter";
 import ChatMessages from "./MiniChat/ChatMessages";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import io from "socket.io-client";
 
 var ENDPOINT = process.env.REACT_APP_URL;
@@ -15,13 +15,12 @@ function Chatbox() {
   const user = useSelector((state) => state.user);
 
   // IO CONNECTION
-  const [socketConnected, setsocketConnected] = useState(false);
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
-    socket.on("connection", () => setsocketConnected(true));
+    socket.on("connection", () => null);
   }, [user]);
-  console.log(socketConnected);
+
   return (
     <Box
       sx={{

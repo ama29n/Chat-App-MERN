@@ -30,7 +30,6 @@ function LoginForm() {
         password: password,
       })
       .then((res) => {
-        console.log(res.data);
         dispatch(userActions.setUser(res.data));
         dispatch(authActions.login(res.data.token));
       })

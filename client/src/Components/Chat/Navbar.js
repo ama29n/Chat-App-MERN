@@ -12,10 +12,12 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+import Drawer from '@mui/material/Drawer';
+import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import userImage from "../../Resources/ProfilePicture.jpg";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions, chatActions, userActions } from '../../Store/store';
+import { authActions, chatActions, userActions, notificationActions } from '../../Store/store';
 
 // ......................................................................................................................................
 
@@ -56,6 +58,19 @@ export default function Navbar() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  const notifications = useSelector((state) => state.notification.notifications);
+  console.log(notifications);
+
+  const [notififcationDrawer, setNotificationDrawer] = React.useState(false);
+  const toggleDrawer = () => {
+    dispatch(notificationActions.setNotifications([]));
+    setNotificationDrawer(false);
+  };
+  const openNotificationDrawer = () => {
+    setNotificationDrawer(true);
+    handleMobileMenuClose();
+  };
 
   const user = useSelector((state) => {
     return state.user;
@@ -108,27 +123,82 @@ export default function Navbar() {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" color="inherit"><Badge badgeContent={0} color="error"><NotificationsIcon /></Badge></IconButton>
-        <p style={{ marginLeft: "1rem"}}>Notifications</p>
+      <MenuItem onClick={openNotificationDrawer}>
+        <IconButton size="large" color="inherit">
+          <Badge badgeContent={notifications.length} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p style={{ marginLeft: "1rem" }}>Notifications</p>
       </MenuItem>
+
+      <Drawer anchor="right" open={notififcationDrawer} onClose={toggleDrawer}>
+        <Box width="300px">
+          <Box
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: "400",
+              color: "#212529",
+              padding: "0.75rem 1rem"
+            }}
+          >
+            Notifications
+          </Box>
+          {notifications.length === 0 && (
+            <p style={{ color: "#495057", paddingLeft: "1rem" }}>No unread messages</p>
+          )}
+          {notifications.length > 0 && (
+            <Box>
+              {notifications.map((notif) => {
+                return (
+                  <>
+                    <Box sx={__ChatListItem_box} key={notif.chat._id} myPersonalData={notif.chat}>
+                      <Box id={notif.chat._id} width="50px" height="50px">
+                        <img
+                          id={notif.chat._id}
+                          alt="user"
+                          src={notif.sender.profilePhoto}
+                          style={{ height: "auto", width: "100%", borderRadius: "50%" }}
+                        />
+                      </Box>
+
+                      <Box>
+                        <p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{notif.sender.name}</p>
+                        <Box width="140px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}><p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{notif.content}</p></Box>
+                      </Box>
+                    </Box>
+                    <Divider />
+                  </>
+                );
+              })}
+            </Box>
+          )}
+        </Box>
+      </Drawer>
 
       <MenuItem onClick={handleProfileMenuOpen}>
-      <IconButton size="large" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton>
-        <p style={{ marginLeft: "1rem"}}>Profile</p>
+        <IconButton size="large" onClick={handleProfileMenuOpen}>
+          <Box width="30px" height="30px">
+            <img
+              style={{ width: "100%", height: "auto", borderRadius: "50%" }}
+              src={user.profilePhoto}
+              alt="user"
+            />
+          </Box>
+        </IconButton>
+        <p style={{ marginLeft: "1rem" }}>Profile</p>
       </MenuItem>
-
     </Menu>
   );
 
@@ -149,7 +219,7 @@ export default function Navbar() {
 
           {/* Left side icons */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "1rem" }}>
-            <IconButton size="large" color="inherit"><Badge badgeContent={0} color="error"><NotificationsIcon /></Badge></IconButton>
+            <IconButton size="large" color="inherit"><Badge badgeContent={notifications.length} onClick={openNotificationDrawer} color="error"><NotificationsIcon /></Badge></IconButton>
             {/* <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton> */}
             <IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton>
           </Box>
@@ -168,3 +238,13 @@ export default function Navbar() {
     </Box>
   );
 }
+
+const __ChatListItem_box = {
+  display: "flex",
+  padding: "0.75rem 1rem",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  gap: "1rem",
+  color: "black",
+  cursor: "pointer",
+};

@@ -82,16 +82,32 @@ const chatSlice = createSlice({
   },
 });
 
+const notificationInitialState = {
+  notifications: [],
+}
+
+const notificationSlice = createSlice({
+  name: "notification",
+  initialState: notificationInitialState,
+  reducers: {
+    setNotifications(state, action) {
+      state.notifications = action.payload;
+    },
+  },
+})
+
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
     auth: authSlice.reducer,
     chat: chatSlice.reducer,
+    notification: notificationSlice.reducer,
   },
 });
 
 export const userActions = userSlice.actions;
 export const authActions = authSlice.actions;
 export const chatActions = chatSlice.actions;
+export const notificationActions = notificationSlice.actions;
 
 export default store;

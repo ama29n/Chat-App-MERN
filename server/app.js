@@ -78,4 +78,10 @@ io.on("connection", (socket) => {
       socket.in(user._id).emit("message recieved", newMessageRecieved);
     });
   });
+
+  socket.off("setup", () => {
+    console.log("User Disconnected");
+    // Leave the room we created for that particular user 
+    socket.leave(userData.id);
+  });
 });

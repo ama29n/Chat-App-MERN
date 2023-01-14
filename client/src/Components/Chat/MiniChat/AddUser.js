@@ -14,6 +14,7 @@ function AddUser() {
   const URL = process.env.REACT_APP_URL;
   const dispatch = useDispatch();
   const [searchedUser, setSearchedUser] = useState("");
+  const [isLoading, setisLoading] = useState(false);
   const searchedUserChangeHandler = (e) => {
     setSearchedUser(e.target.value);
   };
@@ -47,6 +48,7 @@ function AddUser() {
   const addNewUserHandler = async (e) => {
     try {
         console.log(e.target.id);
+        setisLoading(true);
         const response1 = await axios.post(URL + "/chat", {userId: e.target.id}, {
             headers: {
                 "Authorization": "Bearer " + user.token,
@@ -59,6 +61,7 @@ function AddUser() {
             },
         });
         dispatch(chatActions.setChatList(response2.data));
+        setisLoading(false);
         handleClose();
     } catch (error) {
         console.log(error);
@@ -86,7 +89,7 @@ function AddUser() {
                                 <p id={listUser._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{listUser.email}</p>
                             </Box>
                             <Box sx={{ flexGrow: 1 }} />
-                            <Button variant="outlined" id={listUser._id} onClick={addNewUserHandler} endIcon={<PersonAddAltIcon />}>Add</Button>
+                            <Button variant="outlined" id={listUser._id} onClick={addNewUserHandler} endIcon={<PersonAddAltIcon />} disabled={isLoading}>Add</Button>
                           </Box>
                           <Divider />
                         </Box>
