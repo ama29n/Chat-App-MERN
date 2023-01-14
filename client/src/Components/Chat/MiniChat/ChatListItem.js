@@ -1,17 +1,20 @@
 import { Box, Divider } from "@mui/material";
-import userImage from "../../../Resources/ProfilePicture.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 
 function ChatListItem({ chat }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  let name, sender = null;
+  const selectedChat = useSelector((state) => state.chat.selectedChat);
+
+  let name, sender = null, profilePhoto;
   if(chat.chatName === "sender") {
     if(chat.users[0].name === user.name) {
       name = chat.users[1].name;
+      profilePhoto = chat.users[1].profilePhoto;
     } else {
       name = chat.users[0].name;
+      profilePhoto = chat.users[0].profilePhoto;
     }
   } else {
     name = chat.chatName;
@@ -23,7 +26,10 @@ function ChatListItem({ chat }) {
   }
   const selectHandler = (e) => {
     e.preventDefault();
-    dispatch(chatActions.setSelectedChat(chat));
+    if(JSON.stringify(selectedChat._id) !== JSON.stringify(chat._id)) {
+      dispatch(chatActions.setChatMessages([]));
+      dispatch(chatActions.setSelectedChat(chat));
+    }
   };
   return (
     <>
@@ -32,7 +38,7 @@ function ChatListItem({ chat }) {
           <img
             id={chat._id}
             alt="user"
-            src={userImage}
+            src={profilePhoto}
             style={{ height: "auto", width: "100%", borderRadius: "50%" }}
           />
         </Box>

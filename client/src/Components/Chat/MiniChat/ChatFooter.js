@@ -18,6 +18,8 @@ function ChatFooter({ socket }) {
 
   // Send message to a user
   const messageSendHandler = async (e) => {
+    if(message.length === 0)
+      return;
     try {
       const response = await axios.post(
         URL + "/message",

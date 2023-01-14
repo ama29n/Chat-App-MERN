@@ -30,6 +30,7 @@ function LoginForm() {
         password: password,
       })
       .then((res) => {
+        console.log(res.data);
         dispatch(userActions.setUser(res.data));
         dispatch(authActions.login(res.data.token));
       })
@@ -40,7 +41,7 @@ function LoginForm() {
   const defualtUserCredentialsHandler = (e) => {
     e.preventDefault();
     setEmail("johndoe@gmail.com");
-    setPassword("johndoe");
+    setPassword("johndoe12345678");
   };
   return (
     <Box sx={__LoginForm_box}>

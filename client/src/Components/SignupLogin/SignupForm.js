@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { TextField, Box, IconButton, InputAdornment, Button } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import PrimaryButton from "../Common/PrimaryButton";
 import axios from "axios";
 
 function SignupForm({ successfullRegister }) {
   const URL = process.env.REACT_APP_URL;
+  const CLOUDINARY_URL = process.env.REACT_APP_CLOUDINARY_URL;
   const userImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
-  const tickImage = "http://www.clker.com/cliparts/G/e/b/2/O/0/blue-check-mark-md.png";
 
   const [showVisibility, setShowVisibility] = useState(false);
   const showVisibilityHandler = () => {
@@ -19,6 +19,8 @@ function SignupForm({ successfullRegister }) {
   const [password, setPassword] = useState("");
   const [profilePhoto, setProfilePhoto] = useState(userImage);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const nameChangeHandler = (e) => {
     setName(e.target.value);
   };
@@ -28,8 +30,24 @@ function SignupForm({ successfullRegister }) {
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
   };
-  const profilePhotoChangeHandler = (e) => {
-    setProfilePhoto(tickImage);
+  const profilePhotoChangeHandler = async (e) => {
+    const file = e.target.files["0"];
+    if(file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
+      try {
+        setIsLoading(true);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "Chat-App-MERN");
+        formData.append("cloud_name", "dbpu407gg");
+        const imageData = await axios.post(CLOUDINARY_URL, formData);
+        const image = imageData.data;
+        setProfilePhoto(image.url);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+      }
+    }
   };
 
   const signUpHandler = (e) => {
@@ -38,7 +56,7 @@ function SignupForm({ successfullRegister }) {
       name: name,
       email: email,
       password: password,
-      profilePhoto: userImage
+      profilePhoto: profilePhoto
     })
     .then(res => {
       setName("");
@@ -48,7 +66,6 @@ function SignupForm({ successfullRegister }) {
       successfullRegister();
     })
     .catch(error => {
-      // console.log(error.response.data.message);
       alert(error.response.data.message);
     });
   }
@@ -77,8 +94,7 @@ function SignupForm({ successfullRegister }) {
           <input color="primary" accept="image/*" type="file" style={{ display: "none" }} onChange={profilePhotoChangeHandler} />
         </Button>
       </Box>
-
-      <PrimaryButton clickHandler={signUpHandler} buttonText="Sign Up" />
+      <LoadingButton variant="contained" loading={isLoading ? true : false} loadingIndicator="Wait..." onClick={signUpHandler}>Sign Up</LoadingButton>
     </Box>
   );
 }

@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import { useNavigate } from "react-router-dom";
-import userImage from "../../Resources/ProfilePicture.jpg";
+// import userImage from "../../Resources/ProfilePicture.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions, chatActions, userActions } from '../../Store/store';
 
@@ -90,7 +90,7 @@ export default function Navbar() {
       <Dialog open={open} onClose={handleClose} >
           <Box padding="2rem 2rem 0 2rem" fontSize="1.2rem" color="#212529">Your Profile</Box>
           <Box display="flex" gap="2rem" alignItems="center" padding="2rem">
-            <Box width="150px" height="150px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box>
+            <Box width="150px" height="150px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box>
             <Box>
               <p style={{ fontSize: "2rem", color: "#212529"}}>{user.name}</p>
               <p style={{ fontSize: "1.2rem", fontWeight: "400", color: "#495057" }}>{user.email}</p>
@@ -125,7 +125,7 @@ export default function Navbar() {
       </MenuItem>
 
       <MenuItem onClick={handleProfileMenuOpen}>
-      <IconButton size="large" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box></IconButton>
+      <IconButton size="large" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton>
         <p style={{ marginLeft: "1rem"}}>Profile</p>
       </MenuItem>
 
@@ -151,7 +151,7 @@ export default function Navbar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "1rem" }}>
             <IconButton size="large" color="inherit"><Badge badgeContent={0} color="error"><NotificationsIcon /></Badge></IconButton>
             {/* <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton> */}
-            <IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={userImage} alt="user"/></Box></IconButton>
+            <IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton>
           </Box>
 
           {/* For small screens */}

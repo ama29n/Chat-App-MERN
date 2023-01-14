@@ -42,8 +42,9 @@ function ChatMessages({ socket }) {
       if(!selectedChatCompare || JSON.stringify(newMessageRecieved.chat._id) !== JSON.stringify(selectedChatCompare._id)) {
         // give notification
       } else {
-        getMessages();
-        dispatch(chatActions.updateLatestMessage({ chatId: selectedChat._id, message: newMessageRecieved }));
+        dispatch(chatActions.setChatMessages([...messages, newMessageRecieved]));
+        if(JSON.stringify(newMessageRecieved.chat._id) === JSON.stringify(selectedChatCompare._id))
+          dispatch(chatActions.updateLatestMessage({ chatId: selectedChat._id, message: newMessageRecieved }));
       }
     });
   });
@@ -51,7 +52,7 @@ function ChatMessages({ socket }) {
   // Scroll to Bottom
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+    messagesEndRef.current?.scrollIntoView(false);
   };
   useEffect(() => {
     scrollToBottom()
@@ -59,9 +60,8 @@ function ChatMessages({ socket }) {
 
   return (
     <Box sx={__ChatMessages_box}>
-      
       {isLoading && <Box height="100%" display="flex" justifyContent="center"><CircularProgress /></Box>}
-      {messages.length > 0 ? (
+      {messages.length > 0 && !isLoading ? (
         messages.map(message => {
             if(message.sender.name === user.name) {
                 return <ReceiverMessage key={message._id} id={message._id} message={message.content} />
@@ -70,7 +70,7 @@ function ChatMessages({ socket }) {
             }
         })
       ) : null}
-      <div ref={messagesEndRef} />
+      <Box ref={messagesEndRef} height="1px"></Box>
     </Box>
   );
 }
