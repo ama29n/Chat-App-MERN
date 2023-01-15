@@ -85,7 +85,7 @@ function AddGroup() {
 
   return (
     <>
-      <Button disabled variant="outlined" onClick={handleClickOpen} endIcon={<AddIcon />} disableElevation>Create Group</Button>
+      <Button variant="outlined" onClick={handleClickOpen} endIcon={<AddIcon />} disableElevation>Create Group</Button>
       <Dialog open={open} onClose={handleClose}>
 
         <DialogContent>

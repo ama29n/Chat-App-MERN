@@ -199,7 +199,7 @@ export default function Navbar() {
 
                       <Box>
                         <p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{notif.sender.name}</p>
-                        <Box width="140px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}><p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{notif.content}</p></Box>
+                        <Box width="200px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", borderRight: "2px solid grey"}}><p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{notif.content}</p></Box>
                       </Box>
                     </Box>
                     <Divider />
