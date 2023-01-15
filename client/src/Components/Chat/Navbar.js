@@ -1,21 +1,22 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import Drawer from '@mui/material/Drawer';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Badge,
+  MenuItem,
+  Menu,
+  Button,
+  Dialog,
+  DialogActions,
+  Drawer,
+} from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import userImage from "../../Resources/ProfilePicture.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions, chatActions, userActions, notificationActions } from '../../Store/store';
 
@@ -45,37 +46,44 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  // State for dialog of profile
   const [open, setOpen] = React.useState(false);
-
+  // Function to open profile dialog
   const handleClickOpen = () => {
     setAnchorEl(false);
     setOpen(true);
   };
-
+  // Function to close dialog
   const handleClose = () => {
     setOpen(false);
   };
 
+  // Custom hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
+  // Fetch notifications from store
   const notifications = useSelector((state) => state.notification.notifications);
-  console.log(notifications);
-
+  // State for notification drawer
   const [notififcationDrawer, setNotificationDrawer] = React.useState(false);
-  const toggleDrawer = () => {
-    dispatch(notificationActions.setNotifications([]));
+  // Function to close drawer
+  const closeNotificationDrawer = () => {
+    setTimeout(() => {
+      dispatch(notificationActions.setNotifications([]));
+    }, 50);
     setNotificationDrawer(false);
   };
+  // Function to close notification drawer
   const openNotificationDrawer = () => {
     setNotificationDrawer(true);
+    // Close the profile and notification menu dialog
     handleMobileMenuClose();
   };
-
+  // Fetch user from store
   const user = useSelector((state) => {
     return state.user;
   });
-
+  // Logout Handler
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(userActions.deleteUser());
@@ -86,6 +94,7 @@ export default function Navbar() {
 
   // .............................................................................................................................................................................................................................................................
 
+  // Desktop Menu
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -118,7 +127,8 @@ export default function Navbar() {
       <MenuItem onClick={logoutHandler}>Log out</MenuItem>
     </Menu>
   );
-
+  
+  // Mobile Menu
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -142,8 +152,22 @@ export default function Navbar() {
         </IconButton>
         <p style={{ marginLeft: "1rem" }}>Notifications</p>
       </MenuItem>
+      
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton size="large" onClick={handleProfileMenuOpen}>
+          <Box width="30px" height="30px">
+            <img
+              style={{ width: "100%", height: "auto", borderRadius: "50%" }}
+              src={user.profilePhoto}
+              alt="user"
+            />
+          </Box>
+        </IconButton>
+        <p style={{ marginLeft: "1rem" }}>Profile</p>
+      </MenuItem>
 
-      <Drawer anchor="right" open={notififcationDrawer} onClose={toggleDrawer}>
+      {/* Drawer  */}
+      <Drawer anchor="right" open={notififcationDrawer} onClose={closeNotificationDrawer}>
         <Box width="300px">
           <Box
             sx={{
@@ -186,19 +210,7 @@ export default function Navbar() {
           )}
         </Box>
       </Drawer>
-
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton size="large" onClick={handleProfileMenuOpen}>
-          <Box width="30px" height="30px">
-            <img
-              style={{ width: "100%", height: "auto", borderRadius: "50%" }}
-              src={user.profilePhoto}
-              alt="user"
-            />
-          </Box>
-        </IconButton>
-        <p style={{ marginLeft: "1rem" }}>Profile</p>
-      </MenuItem>
+    {/* Mobile menu closing  */}
     </Menu>
   );
 

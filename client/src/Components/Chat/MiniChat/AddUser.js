@@ -11,14 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 
 function AddUser() {
-  const URL = process.env.REACT_APP_URL;
-  const dispatch = useDispatch();
-  const [searchedUser, setSearchedUser] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const searchedUserChangeHandler = (e) => {
-    setSearchedUser(e.target.value);
-  };
-  const [searchedUserList, setSearchedUserList] = useState([]);
+  // Dialog state
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,8 +21,22 @@ function AddUser() {
     setSearchedUserList([]);
     setOpen(false);
   };
+  // URL
+  const URL = process.env.REACT_APP_URL;
+  const dispatch = useDispatch();
+  // Fetching user from store
   const user = useSelector(state => state.user);
-  const searchedUserHandler = async (e) => {
+  // State for input field
+  const [searchedUser, setSearchedUser] = useState("");
+  const searchedUserChangeHandler = (e) => {
+    setSearchedUser(e.target.value);
+  };
+  // Loader for after selecting the user
+  const [isLoading, setisLoading] = useState(false);
+  // State for searched user list
+  const [searchedUserList, setSearchedUserList] = useState([]);
+  // Function to fetch users from server
+  const findSearchedUserHandler = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.get(
@@ -45,9 +52,9 @@ function AddUser() {
       alert(error.response.data);
     }
   };
-  const addNewUserHandler = async (e) => {
+  // Function to create chat in the database of the user and selected user
+  const createNewChat = async (e) => {
     try {
-        console.log(e.target.id);
         setisLoading(true);
         const response1 = await axios.post(URL + "/chat", {userId: e.target.id}, {
             headers: {
@@ -69,7 +76,7 @@ function AddUser() {
   };
   return (
     <>
-      <Button variant="contained" onClick={handleClickOpen} endIcon={<PersonAddAltIcon />}>Search User</Button>
+      <Button variant="contained" disableElevation onClick={handleClickOpen} endIcon={<PersonAddAltIcon />}>Search User</Button>
 
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
@@ -89,7 +96,7 @@ function AddUser() {
                                 <p id={listUser._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{listUser.email}</p>
                             </Box>
                             <Box sx={{ flexGrow: 1 }} />
-                            <Button variant="outlined" id={listUser._id} onClick={addNewUserHandler} endIcon={<PersonAddAltIcon />} disabled={isLoading}>Add</Button>
+                            <Button variant="outlined" id={listUser._id} onClick={createNewChat} disabled={isLoading}>Add</Button>
                           </Box>
                           <Divider />
                         </Box>
@@ -102,8 +109,8 @@ function AddUser() {
         </DialogContent>
 
         <DialogActions>
-          <Button variant="contained" onClick={searchedUserHandler}>Search</Button>
-          <Button variant="outlined" onClick={handleClose} autoFocus>Cancel</Button>
+          <Button variant="contained" disableElevation onClick={findSearchedUserHandler}>Search</Button>
+          <Button variant="text" disableElevation onClick={handleClose} autoFocus>Cancel</Button>
         </DialogActions>
       </Dialog>
     </>
