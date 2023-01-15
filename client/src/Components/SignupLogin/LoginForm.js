@@ -68,7 +68,7 @@ function LoginForm() {
         {...{ type: showVisibility ? null : "password" }}
       />
       <PrimaryButton clickHandler={loginHandler} buttonText="Login" />
-      <Button variant="outlined" onClick={defualtUserCredentialsHandler}>
+      <Button disabled variant="outlined" onClick={defualtUserCredentialsHandler}>
         Get User Credential
       </Button>
     </Box>
