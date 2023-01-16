@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,6 +8,7 @@ import CustomInput from "../../Common/CustomInput";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import AddGroupListItem from "./AddGroupListItem";
 // import { chatActions } from "../../../Store/store";
 
 function AddGroup() {
@@ -30,11 +31,13 @@ function AddGroup() {
   const searchedUserChangeHandler = (e) => {
     setSearchedUser(e.target.value);
   };
+  // State for list loading
+  const [isListLoading, setIsListLoading] = useState(false);
   // State for searched user list
   const [searchedUserList, setSearchedUserList] = useState([]);
   // Function to fetch users from server
   const findSearchedUserHandler = async (e) => {
-    e.preventDefault();
+    setIsListLoading(true);
     try {
       const response = await axios.get(
         `${URL}/user/search?input=${searchedUser}`,
@@ -45,8 +48,10 @@ function AddGroup() {
         }
       );
       setSearchedUserList(response.data);
+      setIsListLoading(false);
     } catch (error) {
       alert(error.response.data);
+      setIsListLoading(false);
     }
   };
   // State for selected users to be added in group
@@ -85,43 +90,67 @@ function AddGroup() {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen} endIcon={<AddIcon />} disableElevation>Create Group</Button>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        endIcon={<AddIcon />}
+        disableElevation
+      >
+        Create Group
+      </Button>
       <Dialog open={open} onClose={handleClose}>
-
         <DialogContent>
-        <Box sx={__AddGroup_box}>
-            <CustomInput value={searchedUser} changeHandler={searchedUserChangeHandler} placeholder="Enter name or email" />
-            {searchedUserList.length < 1 ? <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>Search with empty field to see all users</p> : null}
-            {searchedUserList.length > 0 ? 
-              <Box marginTop="10px" width="470px" height="240px" sx={{ overflowY: "scroll" }} display="flex" flexDirection="column" border="1px solid #d6d6d7">
-                {searchedUserList.length > 0 ? searchedUserList.map(listUser => {
-                    return (
-                        <Box key={listUser._id}>
-                          <Box key={listUser._id} id={listUser._id} display="flex" gap="1rem" alignItems="center" padding="1rem">
-                            <Box id={listUser._id} height="50px" width="50px"><img id={listUser._id} style={{ height: "auto", width: "100%", borderRadius: "50%" }} alt="listUser" src={listUser.profilePhoto} /></Box>
-                            <Box id={listUser._id}>
-                                <p id={listUser._id} style={{ color: "#212529"}}>{listUser.name}</p>
-                                <p id={listUser._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{listUser.email}</p>
-                            </Box>
-                            <Box sx={{ flexGrow: 1 }} />
-                            <Button variant="outlined" id={listUser._id} onClick={addUserToGroupHandler}>Add</Button>
-                          </Box>
-                          <Divider />
-                        </Box>
-                    );
-                }) : null}
+          <Box sx={__AddGroup_box}>
+            <CustomInput
+              value={searchedUser}
+              changeHandler={searchedUserChangeHandler}
+              placeholder="Enter name or email"
+            />
+            {searchedUserList.length < 1 ? (
+              <p style={__AddGroup_search_info_text}>
+                Search with empty field to see all users
+              </p>
+            ) : null}
+            {searchedUserList.length > 0 ? (
+              <Box sx={__AddGroup_userlist_box}>
+                {searchedUserList.length > 0
+                  ? searchedUserList.map((listUser) => (
+                      <AddGroupListItem
+                        listUser={listUser}
+                        addUserToGroupHandler={addUserToGroupHandler}
+                      />
+                    ))
+                  : null}
+                  {isListLoading ? <CircularProgress /> : null}
               </Box>
-            : null}
-
+            ) : null}
           </Box>
         </DialogContent>
 
         <DialogActions>
-          <Button variant="contained" disableElevation onClick={createGroupHandler}>Create</Button>
-          <Button variant="outlined" disableElevation onClick={findSearchedUserHandler}>Search</Button>
-          <Button variant="text" disableElevation onClick={handleClose} autoFocus>Cancel</Button>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={createGroupHandler}
+          >
+            Create
+          </Button>
+          <Button
+            variant="outlined"
+            disableElevation
+            onClick={findSearchedUserHandler}
+          >
+            Search
+          </Button>
+          <Button
+            variant="text"
+            disableElevation
+            onClick={handleClose}
+            autoFocus
+          >
+            Cancel
+          </Button>
         </DialogActions>
-        
       </Dialog>
     </>
   );
@@ -135,4 +164,20 @@ const __AddGroup_box = {
   flexDirection: "column",
   gap: "1rem",
   alignItems: "center",
+};
+
+const __AddGroup_userlist_box = {
+  overflowY: "scroll",
+  height: "240px",
+  width: "470px",
+  marginTop: "10px",
+  display: "flex",
+  flexDirection: "column",
+  border: "1px solid #d6d6d7",
+};
+
+const __AddGroup_search_info_text = {
+  fontSize: "14px",
+  fontWeight: "400",
+  color: "#495057",
 };
