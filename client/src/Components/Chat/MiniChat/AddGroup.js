@@ -121,9 +121,9 @@ function AddGroup() {
                       />
                     ))
                   : null}
-                  {isListLoading ? <CircularProgress /> : null}
               </Box>
             ) : null}
+            {isListLoading ? (<CircularProgress />) : null}
           </Box>
         </DialogContent>
 
