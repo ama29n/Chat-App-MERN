@@ -1,19 +1,29 @@
 import { useState } from "react";
-import { TextField, Box, IconButton, InputAdornment, Button } from "@mui/material";
+import {
+  TextField,
+  Box,
+  IconButton,
+  InputAdornment,
+  Button,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import PrimaryButton from "../Common/PrimaryButton";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { userActions, authActions } from "../../Store/store";
+import PopupMessage from "../Common/PopupMessage";
 
 function LoginForm() {
+  // URL and hooks
   const URL = process.env.REACT_APP_URL;
   const dispatch = useDispatch();
+  // State for password view
   const [showVisibility, setShowVisibility] = useState(false);
   const showVisibilityHandler = () => {
     setShowVisibility((prev) => !prev);
   };
+  // State to manage email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const emailChangeHandler = (e) => {
@@ -22,8 +32,25 @@ function LoginForm() {
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value);
   };
+  // State for manage message
+  const [message, setMessage] = useState("");
+  // State to manage error message
+  const [errorMessage, setErrorMessage] = useState(false);
+  const openErrorMessage = () => {
+    setErrorMessage(true);
+  }
+  const closeErrorMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorMessage(false);
+  };
+  // State to managage loading
+  const [isLoading, setIsLoading] = useState(false);
+  // Function to handle login
   const loginHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     axios
       .post(URL + "/user/login", {
         email: email,
@@ -32,13 +59,16 @@ function LoginForm() {
       .then((res) => {
         dispatch(userActions.setUser(res.data));
         dispatch(authActions.login(res.data.token));
+        setIsLoading(false);
       })
       .catch((error) => {
-        alert(error.response.data);
+        setMessage(error.response.data);
+        openErrorMessage();
+        setIsLoading(false);
       });
   };
-  const defualtUserCredentialsHandler = (e) => {
-    e.preventDefault();
+  // Function to handle default user credentials
+  const defualtUserCredentialsHandler = () => {
     setEmail("johndoe@gmail.com");
     setPassword("johndoe12345678");
   };
@@ -67,10 +97,18 @@ function LoginForm() {
         }}
         {...{ type: showVisibility ? null : "password" }}
       />
-      <PrimaryButton clickHandler={loginHandler} buttonText="Login" />
+      <LoadingButton
+        onClick={loginHandler}
+        variant="contained"
+        loading={isLoading ? true : false}
+        loadingIndicator="Wait..."
+      >
+        Login
+      </LoadingButton>
       <Button variant="outlined" onClick={defualtUserCredentialsHandler}>
         Get User Credential
       </Button>
+      <PopupMessage open={errorMessage} handleClose={closeErrorMessage} severity="error" message={message} />
     </Box>
   );
 }

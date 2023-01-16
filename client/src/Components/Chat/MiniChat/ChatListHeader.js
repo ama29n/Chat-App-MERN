@@ -10,10 +10,24 @@ function ChatHeader() {
         flexDirection: "column",
         backgroundColor: "White",
         height: "70px",
-        justifyContent: "center"
+        justifyContent: "center",
+        "@media(max-width: 1260px)": {
+          height: "120px"
+        },
+        "@media(max-width: 700px)": {
+          height: "200px"
+        },
       }}
     >
-      <Box display="flex" justifyContent="space-between" p="1rem">
+      <Box sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "1rem",
+        "@media(max-width: 1260px)": {
+          flexDirection: "column",
+          gap: "1rem"
+        }
+      }}>
         <AddUser />
         <AddGroup />
       </Box>

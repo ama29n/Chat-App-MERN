@@ -11,17 +11,11 @@ import Chatbox from "../Components/Chat/Chatbox";
 
 function ChatPage() {
   // const user = useSelector((state) => state.user);
-
   return (
     <Box sx={{ height: "100vh" }}>
       <Box sx={__ChatPage_background_box}></Box>
       <Header />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+      <Box display="flex" alignItems="center">
         <Chatlist />
         <Chatbox />
       </Box>

@@ -6,6 +6,7 @@ import LoginForm from "../Components/SignupLogin/LoginForm";
 import background from "../Resources/bg-2.jpg";
 
 function StartPage() {
+  // State to manage toggle button
   const [action, setAction] = useState("login");
   const changeAction = (e) => {
     if (action === e.target.value) return;

@@ -34,7 +34,11 @@ function ChatListItem({ chat }) {
   return (
     <>
       <Box sx={__ChatListItem_box} key={chat._id} id={chat._id} onClick={selectHandler}>
-        <Box id={chat._id} width="50px" height="50px">
+        <Box id={chat._id} width="50px" height="50px" sx={{
+          "@media(max-width: 1000px)": {
+            display: "none"
+          }
+        }}>
           <img
             id={chat._id}
             alt="user"

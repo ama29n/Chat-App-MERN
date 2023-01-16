@@ -48,8 +48,8 @@ connectToDbAndStartServer();
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://chat-app-ama29n.onrender.com",
-    // origin: "http://localhost:3000"
+    // origin: "https://chat-app-ama29n.onrender.com",
+    origin: "http://localhost:3000"
   },
 });
 
