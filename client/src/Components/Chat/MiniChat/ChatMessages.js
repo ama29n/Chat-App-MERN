@@ -63,7 +63,7 @@ function ChatMessages({ socket }) {
 
   return (
     <Box sx={__ChatMessages_box}>
-      {isLoading && <Box height="100%" display="flex" justifyContent="center"><CircularProgress /></Box>}
+      {isLoading && <Box marginTop="30px" display="flex" justifyContent="center"><CircularProgress /></Box>}
       {messages.length > 0 && !isLoading ? (
         messages.map(message => {
             if(message.sender.name === user.name) {

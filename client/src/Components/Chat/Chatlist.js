@@ -37,7 +37,7 @@ function Chatlist() {
       <ChatHeader />
       <Divider />
       <Box>
-        {isLoading && <Box height="100%" display="flex" justifyContent="center"><CircularProgress /></Box>}
+        {isLoading && <Box marginTop="30px" display="flex" justifyContent="center"><CircularProgress /></Box>}
         {chatList.length > 0 ? chatList.map(chat => (<ChatListItem chat={chat} key={chat._id} />)) : null}
       </Box>
     </Box>
