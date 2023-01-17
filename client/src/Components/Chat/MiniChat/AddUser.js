@@ -10,6 +10,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 import AddUserListItem from "./AddUserListItem";
+import PopupMessage from "../../Common/PopupMessage";
 
 function AddUser() {
   // Dialog state
@@ -36,10 +37,24 @@ function AddUser() {
   const [isLoading, setisLoading] = useState(false);
   // State for list loading
   const [isListLoading, setIsListLoading] = useState(false);
+  // State for message
+  const [message, setMessage] = useState("");
+  // State to manage error message
+  const [errorMessage, setErrorMessage] = useState(false);
+  const openErrorMessage = () => {
+    setErrorMessage(true);
+  };
+  const closeErrorMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorMessage(false);
+  };
   // State for searched user list
   const [searchedUserList, setSearchedUserList] = useState([]);
   // Function to fetch users from server
   const findSearchedUserHandler = async (e) => {
+    setSearchedUserList([]);
     setIsListLoading(true);
     try {
       const response = await axios.get(
@@ -54,7 +69,8 @@ function AddUser() {
       setSearchedUserList(response.data);
     } catch (error) {
       setIsListLoading(false);
-      alert(error.response.data);
+      setMessage(error.response.data);
+      openErrorMessage();
     }
   };
   // Function to create chat in the database of the user and selected user
@@ -84,7 +100,7 @@ function AddUser() {
     }
   };
   return (
-    <>
+    <div>
       <Button variant="contained" disableElevation onClick={handleClickOpen} endIcon={<PersonAddAltIcon />}>Search User</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
@@ -116,7 +132,13 @@ function AddUser() {
           <Button variant="text" disableElevation onClick={handleClose} autoFocus>Cancel</Button>
         </DialogActions>
       </Dialog>
-    </>
+      <PopupMessage
+        open={errorMessage}
+        handleClose={closeErrorMessage}
+        severity="error"
+        message={message}
+      />
+    </div>
   );
 }
 

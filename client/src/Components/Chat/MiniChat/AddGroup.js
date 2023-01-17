@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import AddGroupListItem from "./AddGroupListItem";
+import PopupMessage from "../../Common/PopupMessage";
 // import { chatActions } from "../../../Store/store";
 
 function AddGroup() {
@@ -33,10 +34,24 @@ function AddGroup() {
   };
   // State for list loading
   const [isListLoading, setIsListLoading] = useState(false);
+  // State for message
+  const [message, setMessage] = useState("");
+  // State to manage error message
+  const [errorMessage, setErrorMessage] = useState(false);
+  const openErrorMessage = () => {
+    setErrorMessage(true);
+  };
+  const closeErrorMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorMessage(false);
+  };
   // State for searched user list
   const [searchedUserList, setSearchedUserList] = useState([]);
   // Function to fetch users from server
   const findSearchedUserHandler = async (e) => {
+    setSearchedUserList([]);
     setIsListLoading(true);
     try {
       const response = await axios.get(
@@ -50,7 +65,8 @@ function AddGroup() {
       setSearchedUserList(response.data);
       setIsListLoading(false);
     } catch (error) {
-      alert(error.response.data);
+      setMessage(error.response.data);
+      openErrorMessage();
       setIsListLoading(false);
     }
   };
@@ -89,7 +105,7 @@ function AddGroup() {
   }
 
   return (
-    <>
+    <div>
       <Button
         variant="outlined"
         onClick={handleClickOpen}
@@ -152,7 +168,13 @@ function AddGroup() {
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+      <PopupMessage
+        open={errorMessage}
+        handleClose={closeErrorMessage}
+        severity="error"
+        message={message}
+      />
+    </div>
   );
 }
 
