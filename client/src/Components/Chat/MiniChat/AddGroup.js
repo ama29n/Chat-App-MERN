@@ -111,6 +111,7 @@ function AddGroup() {
         onClick={handleClickOpen}
         endIcon={<AddIcon />}
         disableElevation
+        disabled
       >
         Create Group
       </Button>

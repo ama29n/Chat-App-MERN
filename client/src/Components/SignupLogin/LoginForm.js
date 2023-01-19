@@ -70,7 +70,7 @@ function LoginForm() {
   // Function to handle default user credentials
   const defualtUserCredentialsHandler = () => {
     setEmail("johndoe@gmail.com");
-    setPassword("johndoe12345678");
+    setPassword("12345678");
   };
   return (
     <Box sx={__LoginForm_box}>
@@ -105,7 +105,7 @@ function LoginForm() {
       >
         Login
       </LoadingButton>
-      <Button variant="outlined" onClick={defualtUserCredentialsHandler}>Get User Credential</Button>      
+      <Button disabled variant="outlined" onClick={defualtUserCredentialsHandler}>Get User Credential</Button>    
       <PopupMessage open={errorMessage} handleClose={closeErrorMessage} severity="error" message={message} />
     </Box>
   );

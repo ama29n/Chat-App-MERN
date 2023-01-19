@@ -18,7 +18,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions, chatActions, userActions, notificationActions } from '../../Store/store';
+import { authActions, chatActions, userActions } from '../../Store/store';
 
 // ......................................................................................................................................
 
@@ -68,9 +68,6 @@ export default function Navbar() {
   const [notififcationDrawer, setNotificationDrawer] = React.useState(false);
   // Function to close drawer
   const closeNotificationDrawer = () => {
-    setTimeout(() => {
-      dispatch(notificationActions.setNotifications([]));
-    }, 50);
     setNotificationDrawer(false);
   };
   // Function to close notification drawer
@@ -185,9 +182,13 @@ export default function Navbar() {
           {notifications.length > 0 && (
             <Box>
               {notifications.map((notif) => {
+                const selectChatHandler = (e) => {
+                  dispatch(chatActions.setSelectedChat(notif.chat));
+                  setNotificationDrawer(false);
+                }
                 return (
-                  <>
-                    <Box sx={__ChatListItem_box} key={notif.chat._id} myPersonalData={notif.chat}>
+                  <div key={notif.chat._id}>
+                    <Box sx={__ChatListItem_box} key={notif.chat._id} id={notif.chat._id} onClick={selectChatHandler}>
                       <Box id={notif.chat._id} width="50px" height="50px">
                         <img
                           id={notif.chat._id}
@@ -203,7 +204,7 @@ export default function Navbar() {
                       </Box>
                     </Box>
                     <Divider />
-                  </>
+                  </div>
                 );
               })}
             </Box>
