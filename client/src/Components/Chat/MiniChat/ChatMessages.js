@@ -40,7 +40,7 @@ function ChatMessages({ socket }) {
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
-      if(!selectedChatCompare || JSON.stringify(newMessageRecieved.chat._id) !== JSON.stringify(selectedChatCompare._id)) {
+      if(!selectedChatCompare._id || JSON.stringify(newMessageRecieved.chat._id) !== JSON.stringify(selectedChatCompare._id)) {
         console.log("notif");
         dispatch(notificationActions.setNotifications([newMessageRecieved, ...notifications]));
         dispatch(chatActions.updateLatestMessage({ chatId: newMessageRecieved.chat._id, message: newMessageRecieved }));

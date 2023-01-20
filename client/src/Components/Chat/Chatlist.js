@@ -52,7 +52,7 @@ const __Chatlist_box = {
   flex: "30%",
   width: "100%",
   backgroundColor: "#faf9f9",
-  height: "91vh",
+  height: "calc(100vh - 64px)",
   borderRight: "1px solid #E6E6E6",
   overflowY: "scroll",
 };

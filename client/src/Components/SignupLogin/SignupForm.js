@@ -80,7 +80,7 @@ function SignupForm({ successfullRegister }) {
         formData.append("cloud_name", "dbpu407gg");
         const imageData = await axios.post(CLOUDINARY_URL, formData);
         const image = imageData.data;
-        setProfilePhoto(image.url);
+        setProfilePhoto(image.eager[0].url);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);

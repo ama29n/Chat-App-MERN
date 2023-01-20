@@ -26,7 +26,7 @@ function Chatbox() {
   useEffect(() => {
     if(selectedChat._id) {
       return;
-    } 
+    }
     socket.on("message recieved", (newMessageRecieved) => {
       dispatch(notificationActions.setNotifications([newMessageRecieved, ...notifications]));
       dispatch(chatActions.updateLatestMessage({ chatId: newMessageRecieved.chat._id, message: newMessageRecieved }));
@@ -39,7 +39,7 @@ function Chatbox() {
         flex: "70%",
         width: "100%",
         backgroundColor: "White",
-        height: "91vh",
+        height: "calc(100vh - 64px)",
         borderBottom: "8px solid #1976D2",
         backgroundImage: `url(${background})`,
         backgroundSize: "contain",

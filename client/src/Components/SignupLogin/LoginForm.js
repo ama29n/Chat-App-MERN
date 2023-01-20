@@ -68,10 +68,14 @@ function LoginForm() {
       });
   };
   // Function to handle default user credentials
-  const defualtUserCredentialsHandler = () => {
+  const defualtJohnCredentialsHandler = () => {
     setEmail("johndoe@gmail.com");
-    setPassword("12345678");
+    setPassword("johndoe12345678");
   };
+  // const defualtJenniferCredentialsHandler = () => {
+  //   setEmail("jenniferdoe@gmail.com");
+  //   setPassword("jenniferdoe12345678");
+  // };
   return (
     <Box sx={__LoginForm_box}>
       <TextField
@@ -105,7 +109,7 @@ function LoginForm() {
       >
         Login
       </LoadingButton>
-      <Button disabled variant="outlined" onClick={defualtUserCredentialsHandler}>Get User Credential</Button>    
+      <Button disabled variant="outlined" onClick={defualtJohnCredentialsHandler}>Get User Credential</Button>      
       <PopupMessage open={errorMessage} handleClose={closeErrorMessage} severity="error" message={message} />
     </Box>
   );
