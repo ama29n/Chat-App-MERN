@@ -37,6 +37,7 @@ function Chatlist() {
       <ChatHeader />
       <Divider />
       <Box>
+        {chatList.length === 0 ? (<Box sx={__Chatlist_header}>No chats yet</Box>) : null}
         {isLoading && <Box marginTop="30px" display="flex" justifyContent="center"><CircularProgress /></Box>}
         {chatList.length > 0 ? chatList.map(chat => (<ChatListItem chat={chat} key={chat._id} />)) : null}
       </Box>
@@ -51,8 +52,17 @@ export default Chatlist;
 const __Chatlist_box = {
   flex: "30%",
   width: "100%",
-  backgroundColor: "#faf9f9",
+  // backgroundColor: "#faf9f9",
+  backgroundColor: "#f6f6f6",
   height: "calc(100vh - 64px)",
   borderRight: "1px solid #E6E6E6",
   overflowY: "scroll",
+};
+
+const __Chatlist_header = {
+  fontWeight: "400",
+  color: "#212529",
+  padding: "2rem 1rem",
+  textAlign: "center",
+
 };
