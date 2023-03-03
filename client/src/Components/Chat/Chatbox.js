@@ -11,7 +11,7 @@ import io from "socket.io-client";
 var ENDPOINT = process.env.REACT_APP_URL;
 var socket;
 
-function Chatbox() {
+function Chatbox({ viewChatList, performBack }) {
   const dispatch = useDispatch();
   const selectedChat = useSelector((state) => state.chat.selectedChat);
   const notifications = useSelector((state) => state.notification.notifications);
@@ -36,19 +36,23 @@ function Chatbox() {
   return (
     <Box
       sx={{
-        // flex: "70%",
         width: "calc(100vw - 400px)",
-        minWidth: "600px",
+        minWidth: "400px",
         backgroundColor: "White",
         height: "calc(100vh - 64px)",
         borderBottom: "8px solid #1976D2",
         backgroundImage: `url(${background})`,
         backgroundSize: "contain",
+        "@media(max-width: 800px)": {
+          display: (viewChatList === false && selectedChat._id ? "initial" : "none"),
+          width: "100%",
+          minWidth: "0px"
+        }
       }}
     >
       {selectedChat._id && (
         <Box position="relative" height="100%">
-          <ChatHeader chat={selectedChat} />
+          <ChatHeader chat={selectedChat} performBack={performBack} />
           <Box>
             <ChatMessages socket={socket} />
           </Box>

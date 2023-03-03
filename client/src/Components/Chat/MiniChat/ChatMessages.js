@@ -83,7 +83,7 @@ export default ChatMessages;
 // Styles
 
 const __ChatMessages_box = {
-  padding: "0 2rem",
+  padding: "0 1rem",
   overflowY: "scroll",
   position: "absolute",
   width: "100%",

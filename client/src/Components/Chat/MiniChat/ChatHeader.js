@@ -1,9 +1,9 @@
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import groupProfile from "../../../Resources/ProfilePicture.jpg";
-// import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-function Chat({ chat }) {
+function Chat({ chat, performBack }) {
   const user = useSelector((state) => state.user);
   let name, profilePhoto, email;
   if(chat.isGroupChat) {
@@ -31,6 +31,7 @@ function Chat({ chat }) {
       position: "absolute",
       width: "100%"
     }}>
+        <Tooltip title="Back"><Button  onClick={performBack}><ArrowBackIcon /></Button></Tooltip>
         <Box id={chat._id} width="50px" height="50px">
           <img
             id={chat._id}
@@ -40,13 +41,6 @@ function Chat({ chat }) {
           />
         </Box>
         <Tooltip title={email} placement="right"><p style={{ color: "#212529", cursor: "pointer" }}>{name}</p></Tooltip>
-        {/* <Box sx={{ flexGrow: 1 }} />
-        {!chat.isGroupChat && (
-          <Box display="flex" gap="0.5rem">
-            <MailOutlineIcon sx={{ color: "#495057"}} />
-            <p style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{email}</p>
-          </Box>
-        )} */}
     </Box>
   );
 }

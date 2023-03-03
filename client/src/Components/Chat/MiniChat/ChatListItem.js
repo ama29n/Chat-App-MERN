@@ -2,7 +2,7 @@ import { Box, Divider, Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 
-function ChatListItem({ chat }) {
+function ChatListItem({ chat, setViewChatListFalse }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const selectedChat = useSelector((state) => state.chat.selectedChat);
@@ -30,6 +30,7 @@ function ChatListItem({ chat }) {
   const selectHandler = (e) => {
     e.preventDefault();
     if (JSON.stringify(selectedChat._id) !== JSON.stringify(chat._id)) {
+      setViewChatListFalse();
       dispatch(chatActions.setChatMessages([]));
       dispatch(chatActions.setSelectedChat(chat));
     }
