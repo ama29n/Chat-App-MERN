@@ -1,6 +1,13 @@
 import { Box } from "@mui/material";
 
-function ReceiverMessage({ id, message }) {
+function ReceiverMessage({ id, message, m }) {
+  var createdAt = m.createdAt;
+  var s = new Date(createdAt).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
+  // let title = date.toLocaleString('en-GB', {day:'numeric', month: 'long', year:'numeric'});
+  let idx = s.length - 2;
+  let arr = s.split("");
+  arr.splice(idx - 4, 3);
+  s = arr.join("");
   return (
     <Box
       id={id}
@@ -18,6 +25,12 @@ function ReceiverMessage({ id, message }) {
       }}
     >
       <p>{message}</p>
+      <p style={{
+        marginTop: "10px",
+        fontSize: "10px",
+        fontWeight: "600",
+        color: "#495057",
+      }}>{s}</p>
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 
@@ -42,16 +42,7 @@ function ChatListItem({ chat }) {
         id={chat._id}
         onClick={selectHandler}
       >
-        <Box
-          id={chat._id}
-          width="50px"
-          height="50px"
-          sx={{
-            "@media(max-width: 1000px)": {
-              display: "none",
-            },
-          }}
-        >
+        <Box id={chat._id} width="50px" height="50px">
           <img
             id={chat._id}
             alt="user"
@@ -61,7 +52,9 @@ function ChatListItem({ chat }) {
         </Box>
 
         <Box>
-          <p id={chat._id} style={{ color: "#212529" }}>{name}</p>
+          <p id={chat._id} style={{ color: "#212529" }}>
+            {name}
+          </p>
           {sender && (
             <Box display="flex" gap="0.25rem" alignItems="center">
               <p
@@ -75,7 +68,11 @@ function ChatListItem({ chat }) {
                 {sender}:
               </p>
               <Box width="140px" sx={__ChatListItem_message_box}>
-                <p id={chat._id} style={__ChatListItem_message_box_message}>{chat.latestMessage.content}</p>
+                <Tooltip title={chat.latestMessage.content} placement="right">
+                  <p id={chat._id} style={__ChatListItem_message_box_message}>
+                    {chat.latestMessage.content}
+                  </p>
+                </Tooltip>
               </Box>
             </Box>
           )}

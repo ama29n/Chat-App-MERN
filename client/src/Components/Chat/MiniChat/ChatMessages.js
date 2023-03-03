@@ -55,10 +55,10 @@ function ChatMessages({ socket }) {
   // Scroll to Bottom
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView(false);
+    messagesEndRef.current.scrollIntoView(false);
   };
   useEffect(() => {
-    scrollToBottom()
+    setTimeout(scrollToBottom);
   }, [messages]);
 
   return (
@@ -67,13 +67,13 @@ function ChatMessages({ socket }) {
       {messages.length > 0 && !isLoading ? (
         messages.map(message => {
             if(message.sender.name === user.name) {
-                return <ReceiverMessage key={message._id} id={message._id} message={message.content} />
+                return <ReceiverMessage key={message._id} id={message._id} message={message.content} m={message} />
             } else {
-                return <SenderMessage key={message._id} id={message._id} message={message.content} />
+                return <SenderMessage key={message._id} id={message._id} message={message.content} m={message} />
             }
         })
       ) : null}
-      <Box ref={messagesEndRef} height="1px"></Box>
+      <Box ref={messagesEndRef} height="2px" width="2px"></Box>
     </Box>
   );
 }

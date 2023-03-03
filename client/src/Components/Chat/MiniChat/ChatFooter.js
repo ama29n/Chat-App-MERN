@@ -1,9 +1,25 @@
 import { Box, Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
 import axios from "axios";
+import EmojiKeyboard from "./EmojiKeyboard";
+
+// const Input = forwardRef((props, ref) => {
+//   return (
+//     <input
+//       value={props.message}
+//       onChange={props.messageChangeHandler}
+//       placeholder="Write a message..."
+//       style={__ChatFooter_input}
+//       onKeyDown={(e) => {
+//         if (e.key === "Enter" && !props.isLoading) props.messageSendHandler();
+//       }}
+//       ref={ref}
+//     />
+//   );
+// });
 
 function ChatFooter({ socket }) {
   // URL
@@ -12,10 +28,23 @@ function ChatFooter({ socket }) {
   const messages = useSelector((state) => state.chat.chatMessages);
   const selectedChat = useSelector((state) => state.chat.selectedChat);
   const user = useSelector((state) => state.user);
+  // Ref to manage input field reference 
+  const inputRef = useRef(null);
   // State to manage message
   const [message, setMessage] = useState("");
   const messageChangeHandler = (e) => {
     setMessage(e.target.value);
+  };
+  // Funtion to add emoji to current message
+  const emojiHandler = (emoji) => {
+    setMessage(message => message + emoji);
+  }
+  // Function to add focus to input field
+  const focusHandler = () => {
+    console.log(inputRef.current);
+    setTimeout(() => {
+      inputRef.current.focus();
+    });
   };
   // State to manage loading
   const [isLoading, setIsLoading] = useState(false);
@@ -45,9 +74,9 @@ function ChatFooter({ socket }) {
       console.log(error);
     }
   };
-
   return (
     <Box sx={__ChatFooter_box}>
+      <EmojiKeyboard emojiHandler={emojiHandler} focusHandler={focusHandler} />
       <Box flexGrow="1">
         <input
           value={message}
@@ -55,7 +84,9 @@ function ChatFooter({ socket }) {
           placeholder="Write a message..."
           style={__ChatFooter_input}
           onKeyDown={(e) => { if(e.key === "Enter" && !isLoading) messageSendHandler(); }}
+          ref={inputRef}
         />
+        {/* <Input message={message} messageChangeHandler={messageChangeHandler} ref={inputRef} isLoading={isLoading} messageSendHandler={messageSendHandler} /> */}
       </Box>
       <Button
         disabled={isLoading ? true : false}

@@ -1,24 +1,11 @@
 import * as React from 'react';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Badge,
-  MenuItem,
-  Menu,
-  Button,
-  Dialog,
-  DialogActions,
-  Drawer,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton, Typography, Badge, MenuItem, Menu, Button, Dialog, DialogActions, Drawer, Tooltip } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions, chatActions, userActions } from '../../Store/store';
+import { authActions, chatActions, notificationActions, userActions } from '../../Store/store';
 
 // ......................................................................................................................................
 
@@ -68,6 +55,7 @@ export default function Navbar() {
   const [notififcationDrawer, setNotificationDrawer] = React.useState(false);
   // Function to close drawer
   const closeNotificationDrawer = () => {
+    dispatch(notificationActions.setNotifications([]));
     setNotificationDrawer(false);
   };
   // Function to close notification drawer
@@ -232,9 +220,9 @@ export default function Navbar() {
 
           {/* Left side icons */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "1rem" }}>
-            <IconButton size="large" color="inherit"><Badge badgeContent={notifications.length} onClick={openNotificationDrawer} color="error"><NotificationsIcon /></Badge></IconButton>
+            <Tooltip title="Notifications"><IconButton size="large" color="inherit"><Badge badgeContent={notifications.length} onClick={openNotificationDrawer} color="error"><NotificationsIcon /></Badge></IconButton></Tooltip>
             {/* <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton> */}
-            <IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton>
+            <Tooltip title="options"><IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton></Tooltip>
           </Box>
 
           {/* For small screens */}

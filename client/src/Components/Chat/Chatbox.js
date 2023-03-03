@@ -36,8 +36,9 @@ function Chatbox() {
   return (
     <Box
       sx={{
-        flex: "70%",
-        width: "100%",
+        // flex: "70%",
+        width: "calc(100vw - 400px)",
+        minWidth: "600px",
         backgroundColor: "White",
         height: "calc(100vh - 64px)",
         borderBottom: "8px solid #1976D2",

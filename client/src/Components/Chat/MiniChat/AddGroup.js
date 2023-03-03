@@ -109,9 +109,9 @@ function AddGroup() {
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        endIcon={<AddIcon />}
         disableElevation
         disabled
+        endIcon={<AddIcon />}
       >
         Create Group
       </Button>

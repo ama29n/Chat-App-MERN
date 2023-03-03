@@ -50,8 +50,9 @@ export default Chatlist;
 // Styles
 
 const __Chatlist_box = {
-  flex: "30%",
-  width: "100%",
+  // flex: "30%",
+  width: "400px",
+  minWidth: "400px",
   // backgroundColor: "#faf9f9",
   backgroundColor: "#f6f6f6",
   height: "calc(100vh - 64px)",

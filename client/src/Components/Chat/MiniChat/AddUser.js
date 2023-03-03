@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -101,7 +101,11 @@ function AddUser() {
   };
   return (
     <div>
-      <Button variant="contained" disableElevation onClick={handleClickOpen} endIcon={<PersonAddAltIcon />}>Search User</Button>
+      <Tooltip title="Add User">
+        <Button variant="contained" disableElevation onClick={handleClickOpen}>
+          <PersonAddAltIcon />
+        </Button>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Box sx={__AddUser_box}>
@@ -118,18 +122,35 @@ function AddUser() {
             {searchedUserList.length > 0 ? (
               <Box sx={__AddUser_userlist_box}>
                 {searchedUserList.length > 0
-                  ? searchedUserList.map((listUser) => ( <AddUserListItem listUser={listUser} isLoading={isLoading} createNewChat={createNewChat} /> ))
+                  ? searchedUserList.map((listUser) => (
+                      <AddUserListItem
+                        listUser={listUser}
+                        isLoading={isLoading}
+                        createNewChat={createNewChat}
+                      />
+                    ))
                   : null}
               </Box>
             ) : null}
-            {isListLoading ? (
-              <CircularProgress />
-            ) : null}
+            {isListLoading ? <CircularProgress /> : null}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" disableElevation onClick={findSearchedUserHandler}>Search</Button>
-          <Button variant="text" disableElevation onClick={handleClose} autoFocus>Cancel</Button>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={findSearchedUserHandler}
+          >
+            Search
+          </Button>
+          <Button
+            variant="text"
+            disableElevation
+            onClick={handleClose}
+            autoFocus
+          >
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
       <PopupMessage
