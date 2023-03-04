@@ -35,6 +35,18 @@ function ChatListItem({ chat, setViewChatListFalse }) {
       dispatch(chatActions.setSelectedChat(chat));
     }
   };
+  // Last message date
+  var createdAt;
+  var s 
+  if(chat.latestMessage) {
+    createdAt = chat.latestMessage.createdAt;
+    s = new Date(createdAt).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
+    let idx = s.length - 2;
+    let arr = s.split("");
+    arr.splice(idx - 4, 3);
+    s = arr.join("");
+  }
+  
   return (
     <>
       <Box
@@ -52,28 +64,35 @@ function ChatListItem({ chat, setViewChatListFalse }) {
           />
         </Box>
 
-        <Box>
-          <p id={chat._id} style={{ color: "#212529" }}>
-            {name}
-          </p>
+        <Box width="100%">
+          <p id={chat._id} style={{ color: "#212529" }}>{name}</p>
           {sender && (
-            <Box display="flex" gap="0.25rem" alignItems="center">
-              <p
-                id={chat._id}
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  color: "#212529",
-                }}
-              >
-                {sender}:
-              </p>
-              <Box width="140px" sx={__ChatListItem_message_box}>
-                <Tooltip title={chat.latestMessage.content} placement="right">
-                  <p id={chat._id} style={__ChatListItem_message_box_message}>
-                    {chat.latestMessage.content}
-                  </p>
-                </Tooltip>
+            <Box display="flex" alignItems="center" justifyContent="space-between">
+              <Box display="flex" gap="0.25rem" alignItems="center">
+                <p
+                  id={chat._id}
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    color: "#212529",
+                  }}
+                >
+                  {sender}:
+                </p>
+                <Box width="140px" sx={__ChatListItem_message_box}>
+                  <Tooltip title={chat.latestMessage.content} placement="right">
+                    <p id={chat._id} style={__ChatListItem_message_box_message}>
+                      {chat.latestMessage.content}
+                    </p>
+                  </Tooltip>
+                </Box>
+              </Box>
+              <Box style={{
+                fontSize: "10px",
+                fontWeight: "600",
+                color: "#495057",
+              }}>
+                {s}
               </Box>
             </Box>
           )}

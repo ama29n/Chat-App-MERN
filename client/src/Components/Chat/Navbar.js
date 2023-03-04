@@ -96,11 +96,14 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleClickOpen}>Profile</MenuItem>
+      
+      {/* View profile  */}
+
       <Dialog open={open} onClose={handleClose} >
-          <Box padding="2rem 2rem 0 2rem" fontSize="1.2rem" color="#212529">Your Profile</Box>
-          <Box display="flex" gap="2rem" alignItems="center" padding="2rem">
+          <Box textAlign="center" padding="2rem 2rem 0 2rem" fontSize="1.2rem" color="#212529">My Profile</Box>
+          <Box display="flex" gap="2rem" alignItems="center" flexDirection="column" padding="2rem">
             <Box width="150px" height="150px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box>
-            <Box>
+            <Box textAlign="center">
               <p style={{ fontSize: "2rem", color: "#212529"}}>{user.name}</p>
               <p style={{ fontSize: "1.2rem", fontWeight: "400", color: "#495057" }}>{user.email}</p>
             </Box>
@@ -109,6 +112,7 @@ export default function Navbar() {
           <Button variant="outlined" onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
+
       <MenuItem onClick={logoutHandler}>Log out</MenuItem>
     </Menu>
   );
@@ -174,6 +178,12 @@ export default function Navbar() {
                   dispatch(chatActions.setSelectedChat(notif.chat));
                   setNotificationDrawer(false);
                 }
+                var createdAt = notif.createdAt;
+                var s = new Date(createdAt).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
+                let idx = s.length - 2;
+                let arr = s.split("");
+                arr.splice(idx - 4, 3);
+                s = arr.join("");
                 return (
                   <div key={notif.chat._id}>
                     <Box sx={__ChatListItem_box} key={notif.chat._id} id={notif.chat._id} onClick={selectChatHandler}>
@@ -188,7 +198,13 @@ export default function Navbar() {
 
                       <Box>
                         <p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{notif.sender.name}</p>
-                        <Box width="200px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", borderRight: "2px solid grey"}}><p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{notif.content}</p></Box>
+                        <Box width="200px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}><p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{notif.content}</p></Box>
+                        <Box style={{
+                          marginTop: "10px",
+                          fontSize: "10px",
+                          fontWeight: "600",
+                          color: "#495057",
+                        }}>{s}</Box>
                       </Box>
                     </Box>
                     <Divider />
@@ -210,10 +226,9 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar>
           {/* Logo */}
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block', fontFamily: "'Oleo Script Swash Caps', cursive", fontSize: "2rem" } }}>Hi You</Typography>
+          <Typography variant="h6" noWrap component="div" sx={{ display: { sm: 'block', fontFamily: "'Oleo Script Swash Caps', cursive", fontSize: "2rem" } }}>Hi You</Typography>
           <Box sx={{ flexGrow: 1 }} />
           {/* Search Input field */}
-          
 
           {/* Space between search input field and left side icons */}
           <Box sx={{ flexGrow: 1 }} />
