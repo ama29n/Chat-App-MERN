@@ -10,8 +10,19 @@ function AddUserListItem({ listUser, createNewChat, isLoading }) {
         gap="1rem"
         alignItems="center"
         padding="1rem"
+        sx={{
+          "@media(max-width: 800px)": {
+            // flexDirection: "column",
+            padding: "1rem 0.25rem",
+            gap: "0"
+          }
+        }}
       >
-        <Box id={listUser._id} height="50px" width="50px">
+        <Box id={listUser._id} height="50px" width="50px" sx={{
+          "@media(max-width: 800px)": {
+            display: "none"
+          }
+        }}>
           <img
             id={listUser._id}
             style={{ height: "auto", width: "100%", borderRadius: "50%" }}

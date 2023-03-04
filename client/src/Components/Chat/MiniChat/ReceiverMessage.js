@@ -1,17 +1,19 @@
 import { Box } from "@mui/material";
 
-function ReceiverMessage({ id, message, m }) {
-  var createdAt = m.createdAt;
+function ReceiverMessage({ message }) {
+  // Date and Time
+  var createdAt = message.createdAt;
   var s = new Date(createdAt).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
-  // let title = date.toLocaleString('en-GB', {day:'numeric', month: 'long', year:'numeric'});
   let idx = s.length - 2;
   let arr = s.split("");
   arr.splice(idx - 4, 3);
   s = arr.join("");
+  // Sender
+  let sender = "You"
   return (
     <Box
-      id={id}
-      key={id}
+      id={message._id}
+      key={message._id}
       sx={{
         maxWidth: "70%",
         width: "fit-content",
@@ -24,7 +26,15 @@ function ReceiverMessage({ id, message, m }) {
         color: "#212529",
       }}
     >
-      <p>{message}</p>
+      {message.chat.isGroupChat && (<p style={{
+        marginBottom: "10px",
+        fontSize: "10px",
+        fontWeight: "600",
+        color: "#495057",
+      }}>
+        {sender}
+      </p>)}
+      <p>{message.content}</p>
       <p style={{
         marginTop: "10px",
         fontSize: "10px",

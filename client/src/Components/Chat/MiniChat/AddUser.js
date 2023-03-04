@@ -12,7 +12,7 @@ import { chatActions } from "../../../Store/store";
 import AddUserListItem from "./AddUserListItem";
 import PopupMessage from "../../Common/PopupMessage";
 
-function AddUser() {
+function AddUser({ setViewChatListFalse }) {
   // Dialog state
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -94,6 +94,7 @@ function AddUser() {
       });
       dispatch(chatActions.setChatList(response2.data));
       setisLoading(false);
+      setViewChatListFalse();
       handleClose();
     } catch (error) {
       console.log(error);
@@ -127,6 +128,7 @@ function AddUser() {
                         listUser={listUser}
                         isLoading={isLoading}
                         createNewChat={createNewChat}
+                        key={listUser._id}
                       />
                     ))
                   : null}
@@ -171,6 +173,9 @@ const __AddUser_box = {
   flexDirection: "column",
   gap: "1rem",
   alignItems: "center",
+  "@media(max-width: 800px)": {
+    width: "100%"
+  }
 };
 
 const __AddUser_userlist_box = {
@@ -181,6 +186,9 @@ const __AddUser_userlist_box = {
   display: "flex",
   flexDirection: "column",
   border: "1px solid #d6d6d7",
+  "@media(max-width: 800px)": {
+    width: "100%"
+  }
 };
 
 const __AddUser_search_info_text = {

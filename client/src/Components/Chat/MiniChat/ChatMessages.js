@@ -67,9 +67,9 @@ function ChatMessages({ socket }) {
       {messages.length > 0 && !isLoading ? (
         messages.map(message => {
             if(message.sender.name === user.name) {
-                return <ReceiverMessage key={message._id} id={message._id} message={message.content} m={message} />
+                return <ReceiverMessage key={message._id} message={message} />
             } else {
-                return <SenderMessage key={message._id} id={message._id} message={message.content} m={message} />
+                return <SenderMessage key={message._id} message={message} />
             }
         })
       ) : null}

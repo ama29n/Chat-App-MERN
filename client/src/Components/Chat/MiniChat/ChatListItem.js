@@ -1,15 +1,14 @@
 import { Box, Divider, Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { chatActions } from "../../../Store/store";
+import ProfilePicture from "../../../Resources/GroupProfilePicture.jpg";
 
 function ChatListItem({ chat, setViewChatListFalse }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const selectedChat = useSelector((state) => state.chat.selectedChat);
 
-  let name,
-    sender = null,
-    profilePhoto;
+  let name, sender = null, profilePhoto;
   if (chat.chatName === "sender") {
     if (chat.users[0].name === user.name) {
       name = chat.users[1].name;
@@ -25,6 +24,10 @@ function ChatListItem({ chat, setViewChatListFalse }) {
     sender = "You";
   } else if (chat.latestMessage) {
     sender = chat.latestMessage.sender.name.split(" ")[0];
+  }
+  // For profile photo
+  if(chat.isGroupChat) {
+    profilePhoto = ProfilePicture;
   }
   // Function to select a chat
   const selectHandler = (e) => {
@@ -60,7 +63,7 @@ function ChatListItem({ chat, setViewChatListFalse }) {
             id={chat._id}
             alt="user"
             src={profilePhoto}
-            style={{ height: "auto", width: "100%", borderRadius: "50%" }}
+            style={{ height: "auto", width: "100%", borderRadius: "50%", border: "2px solid #d6d6d7" }}
           />
         </Box>
 
@@ -79,8 +82,8 @@ function ChatListItem({ chat, setViewChatListFalse }) {
                 >
                   {sender}:
                 </p>
-                <Box width="140px" sx={__ChatListItem_message_box}>
-                  <Tooltip title={chat.latestMessage.content} placement="right">
+                <Box width="100px" sx={__ChatListItem_message_box}>
+                  <Tooltip title={chat.latestMessage.content} placement="right-end">
                     <p id={chat._id} style={__ChatListItem_message_box_message}>
                       {chat.latestMessage.content}
                     </p>

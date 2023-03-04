@@ -6,6 +6,7 @@ import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions, chatActions, notificationActions, userActions } from '../../Store/store';
+import GroupProfilePicture from "../../Resources/GroupProfilePicture.jpg";
 
 // ......................................................................................................................................
 
@@ -191,13 +192,14 @@ export default function Navbar() {
                         <img
                           id={notif.chat._id}
                           alt="user"
-                          src={notif.sender.profilePhoto}
-                          style={{ height: "auto", width: "100%", borderRadius: "50%" }}
+                          src={notif.chat.isGroupChat ? GroupProfilePicture : notif.sender.profilePhoto}
+                          style={{ height: "auto", width: "100%", borderRadius: "50%", border: "2px solid #d6d6d7" }}
                         />
                       </Box>
 
                       <Box>
-                        <p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>{notif.sender.name}</p>
+                        <p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "600", color: "#212529" }}>{notif.chat.isGroupChat ? notif.chat.chatName : notif.sender.name}</p>
+                        {notif.chat.isGroupChat && <p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#212529" }}>- {notif.sender.name}</p>}
                         <Box width="200px" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}><p id={notif.chat._id} style={{ fontSize: "14px", fontWeight: "400", color: "#495057" }}>{notif.content}</p></Box>
                         <Box style={{
                           marginTop: "10px",
@@ -235,7 +237,7 @@ export default function Navbar() {
 
           {/* Left side icons */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "1rem" }}>
-            <Tooltip title="Notifications"><IconButton size="large" color="inherit"><Badge badgeContent={notifications.length} onClick={openNotificationDrawer} color="error"><NotificationsIcon /></Badge></IconButton></Tooltip>
+            <Tooltip title="Notifications"><IconButton onClick={openNotificationDrawer} size="large" color="inherit"><Badge badgeContent={notifications.length} color="error"><NotificationsIcon /></Badge></IconButton></Tooltip>
             {/* <IconButton size="large" edge="end"  onClick={handleProfileMenuOpen} color="inherit"><AccountCircle /></IconButton> */}
             <Tooltip title="options"><IconButton size="large" edge="end" onClick={handleProfileMenuOpen}><Box width="30px" height="30px"><img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.profilePhoto} alt="user"/></Box></IconButton></Tooltip>
           </Box>

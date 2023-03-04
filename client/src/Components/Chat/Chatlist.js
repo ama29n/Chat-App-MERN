@@ -47,7 +47,7 @@ function Chatlist({ viewChatList, setViewChatListFalse }) {
         minWidth: "0px"
       }
     }}>
-      <ChatHeader />
+      <ChatHeader setViewChatListFalse={setViewChatListFalse} />
       <Divider />
       <Box>
         {chatList.length === 0 ? (<Box sx={__Chatlist_header}>No chats yet</Box>) : null}
