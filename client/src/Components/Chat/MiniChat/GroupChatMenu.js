@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Dialog, DialogContent } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, Tooltip } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function GroupChatMenu({ chat }) {
@@ -13,9 +13,11 @@ export default function GroupChatMenu({ chat }) {
   console.log(chat);
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        <MenuIcon />
-      </Button>
+      <Tooltip title="About">
+        <Button variant="outlined" onClick={handleClickOpen}>
+          <MenuIcon />
+        </Button>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Box sx={{
@@ -29,10 +31,15 @@ export default function GroupChatMenu({ chat }) {
                 }
             }}>
             <Box fontSize="20px">{chat.chatName}</Box>
+            <Box>
+              <Box>
+                {`Created by: ${chat.groupAdmin.name}`}
+              </Box>
+            </Box>
             <Box width="100%">
                 {chat.users.map((user) => {
                 return (
-                    <Box display="flex" padding="1rem 0.25rem" gap="1rem" alignItems="center">
+                    <Box key={user._id} display="flex" padding="1rem 0.25rem" gap="1rem" alignItems="center">
                         <Box width="50px" height="50px">
                             <img
                                 id={user._id}
