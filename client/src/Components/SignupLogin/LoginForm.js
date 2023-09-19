@@ -110,7 +110,7 @@ function LoginForm() {
         Login
       </LoadingButton>
       <Button variant="outlined" onClick={defualtJohnCredentialsHandler}>Get User Credential</Button>
-      <Button variant="outlined" onClick={defualtJenniferCredentialsHandler}>Get User Credential</Button>
+      {/* <Button variant="outlined" onClick={defualtJenniferCredentialsHandler}>Get User Credential</Button> */}
       <PopupMessage open={errorMessage} handleClose={closeErrorMessage} severity="error" message={message} />
     </Box>
   );
