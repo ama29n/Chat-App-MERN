@@ -14,8 +14,9 @@ var socket;
 function Chatbox({ viewChatList, performBack }) {
   const dispatch = useDispatch();
   const selectedChat = useSelector((state) => state.chat.selectedChat);
-  const notifications = useSelector((state) => state.notification.notifications);
+  let notifications = useSelector((state) => state.notification.notifications);
   const user = useSelector((state) => state.user);
+
   // IO CONNECTION
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -24,12 +25,16 @@ function Chatbox({ viewChatList, performBack }) {
   }, [user]);
 
   useEffect(() => {
-    if(selectedChat._id) {
+    if(selectedChat?._id) {
       return;
     }
     socket.on("message recieved", (newMessageRecieved) => {
-      dispatch(notificationActions.setNotifications([newMessageRecieved, ...notifications]));
       dispatch(chatActions.updateLatestMessage({ chatId: newMessageRecieved.chat._id, message: newMessageRecieved }));
+      if(selectedChat && String(newMessageRecieved.chat._id) === String(selectedChat._id)) {
+        return;
+      } else {
+        dispatch(notificationActions.setNotifications([newMessageRecieved, ...notifications]));
+      }
     });
   });
 

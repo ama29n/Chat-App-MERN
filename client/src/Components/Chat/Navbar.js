@@ -56,7 +56,6 @@ export default function Navbar() {
   const [notififcationDrawer, setNotificationDrawer] = React.useState(false);
   // Function to close drawer
   const closeNotificationDrawer = () => {
-    dispatch(notificationActions.setNotifications([]));
     setNotificationDrawer(false);
   };
   // Function to close notification drawer
@@ -174,9 +173,12 @@ export default function Navbar() {
           )}
           {notifications.length > 0 && (
             <Box>
-              {notifications.map((notif) => {
+              {notifications.map((notif, i) => {
                 const selectChatHandler = (e) => {
+                  let newList = [...notifications];
+                  newList.splice(i, 1);
                   dispatch(chatActions.setSelectedChat(notif.chat));
+                  dispatch(notificationActions.setNotifications(newList));
                   setNotificationDrawer(false);
                 }
                 var createdAt = notif.createdAt;

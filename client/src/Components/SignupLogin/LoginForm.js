@@ -72,10 +72,10 @@ function LoginForm() {
     setEmail("johndoe@gmail.com");
     setPassword("johndoe12345678");
   };
-  // const defualtJenniferCredentialsHandler = () => {
-  //   setEmail("jenniferdoe@gmail.com");
-  //   setPassword("jenniferdoe12345678");
-  // };
+  const defualtJenniferCredentialsHandler = () => {
+    setEmail("jenniferdoe@gmail.com");
+    setPassword("jenniferdoe12345678");
+  };
   return (
     <Box sx={__LoginForm_box}>
       <TextField
@@ -110,6 +110,7 @@ function LoginForm() {
         Login
       </LoadingButton>
       <Button variant="outlined" onClick={defualtJohnCredentialsHandler}>Get User Credential</Button>
+      <Button variant="outlined" onClick={defualtJenniferCredentialsHandler}>Get User Credential</Button>
       <PopupMessage open={errorMessage} handleClose={closeErrorMessage} severity="error" message={message} />
     </Box>
   );

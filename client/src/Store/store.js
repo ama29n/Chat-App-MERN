@@ -67,9 +67,11 @@ const chatSlice = createSlice({
     updateLatestMessage(state, action) {
       const { chatId, message } = action.payload;
       let updated = false;
-      let newChatList = state.chatList.map((chat) => {
+      let idx = -1;
+      let newChatList = state.chatList.map((chat, i) => {
         if(JSON.stringify(chat._id) === JSON.stringify(chatId)) {
           updated = true;
+          idx = i;
           chat.latestMessage = message;
         }
         return chat;
@@ -82,6 +84,10 @@ const chatSlice = createSlice({
         });
         newChat.latestMessage = Object.assign({}, message);
         newChatList = [newChat, ...newChatList];
+      } else {
+        let dummy = [...newChatList];
+        dummy.splice(idx, 1);
+        newChatList = [newChatList[idx], ...dummy];
       }
       state.chatList = newChatList;
     },
@@ -104,6 +110,9 @@ const notificationSlice = createSlice({
     setNotifications(state, action) {
       state.notifications = action.payload;
     },
+    clearNotifications(state, action) {
+      state.notifications = [];
+    }
   },
 })
 
