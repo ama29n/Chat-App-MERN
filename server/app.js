@@ -48,8 +48,7 @@ connectToDbAndStartServer();
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://chat-app-ama29n.onrender.com",
-    // origin: "http://localhost:3000"
+    origin: ["https://chat-app-ama29n.onrender.com", "http://localhost:3000"],
   },
 });
 
@@ -80,7 +79,7 @@ io.on("connection", (socket) => {
 
   socket.off("setup", () => {
     console.log("User Disconnected");
-    // Leave the room we created for that particular user 
+    // Leave the room we created for that particular user
     socket.leave(userData.id);
   });
 });
